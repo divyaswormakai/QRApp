@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: '_id',
+  name: 'FormIndividualComponent',
 }
 </script>
 

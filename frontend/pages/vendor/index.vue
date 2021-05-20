@@ -173,7 +173,6 @@
 </template>
 
 <script>
-import { message } from 'ant-design-vue'
 import { VENDOR_COLUMNS } from '../../utils/constants'
 
 export default {
@@ -200,7 +199,7 @@ export default {
     async getVendorList() {
       const vendors = await this.$axios.post('/admin/vendor')
       if (!Array.isArray(vendors?.data)) {
-        message.error('Could not load data')
+        this.$message.error('Could not load data')
         return
       }
       this.vendorList = vendors?.data
@@ -209,7 +208,7 @@ export default {
       const result = await this.$axios.delete(`admin/vendor/${record?.id}`)
       console.log(result)
       if (result?.status === 200) {
-        message.success('Successfully deleted' + record?.vendorName)
+        this.$message.success('Successfully deleted' + record?.vendorName)
         this.vendorList = this.vendorList.filter(
           (vendor) => vendor.id !== record.id
         )
@@ -230,13 +229,13 @@ export default {
           if (result?.status === 200) {
             this.vendorList.push(result?.data)
             this.form.resetFields()
-            message.success('Successfully added new vendor.')
+            this.$message.success('Successfully added new vendor.')
             this.visibleAddForm = false
           } else {
-            message.error('Could not add new vendor.')
+            this.$message.error('Could not add new vendor.')
           }
         } else {
-          message.error('Please input correct values')
+          this.$message.error('Please input correct values')
         }
         this.confirmLoading = false
       })
@@ -258,29 +257,27 @@ export default {
     async handleVendorUpdate(e) {
       this.confirmLoading = true
       const updatedVendor = this.editForm.getFieldsValue()
-      console.log(updatedVendor)
       await this.editForm.validateFields(async (err) => {
         if (!err) {
           const result = await this.$axios.put(
             'admin/vendor/' + this.activeVendorID,
             updatedVendor
           )
-          console.log(result)
           if (result?.status === 200) {
             this.vendorList = this.vendorList.map((vendor) => {
               return vendor.id === this.activeVendorID ? result?.data : vendor
             })
             this.editForm.resetFields()
             this.activeVendorID = ''
-            message.success(
+            this.$message.success(
               'Successfully updated vendor:' + updatedVendor?.vendorName
             )
             this.visibleEditForm = false
           } else {
-            message.error('Could not update vendor.')
+            this.$message.error('Could not update vendor.')
           }
         } else {
-          message.error('Please input correct values')
+          this.$message.error('Please input correct values')
         }
         this.confirmLoading = false
       })
