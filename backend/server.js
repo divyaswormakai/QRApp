@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
+const morgan = require('morgan');
 
 // Create an instance for express
 const app = express();
@@ -13,6 +14,10 @@ const VendorRoute = require('./routes/VendorRoute');
 const SummaryRoute = require('./routes/summaryRoute');
 const FormRoute = require('./routes/FormRoute');
 const AdminRoute = require('./routes/AdminRoute');
+
+app.use(
+	morgan(':method :url :status :res[content-length] - :response-time ms')
+);
 
 // Apply the bodyParser middleware, to get json data from requests (Body)
 app.use(bodyParser.json());

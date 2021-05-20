@@ -46,11 +46,11 @@ router.post('/add', async (req, res) => {
 
 // @Route   POST api/form/:id
 // @desc    Get individual form
-// @access  Vendor
+// @access  Vendor & Admin
 router.post('/:id', async (req, res) => {
 	try {
 		const id = req.params.id;
-		const form = await Form.findById(id);
+		const form = await Form.findById(id).populate('vendorID');
 		if (!form) {
 			res.status(400).json({ error: 'Could not save form data for id:' + id });
 		}
@@ -66,7 +66,7 @@ router.post('/:id', async (req, res) => {
 router.post('/vendor/:id', async (req, res) => {
 	try {
 		const vendorID = req.params.id;
-		const forms = await Form.find({ vendorID: vendorID });
+		const forms = await Form.find({ vendorID: vendorID }).populate('vendorID');
 		if (!forms) {
 			res
 				.status(400)

@@ -9,7 +9,7 @@ const Vendor = require('../models/Vendor');
 // @access  Admin
 router.post('/form', async (req, res) => {
 	try {
-		const forms = await Form.find();
+		const forms = await Form.find().populate('vendorID');
 		if (!forms) {
 			res.status(400).json({ error: 'Could not load form data.' });
 		}
