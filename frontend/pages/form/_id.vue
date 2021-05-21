@@ -9,6 +9,7 @@
 
 <script>
 export default {
+  //  TODO: Show the details of the form like in table here
   name: 'FormIndividualComponent',
 }
 </script>

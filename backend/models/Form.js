@@ -40,6 +40,10 @@ const FormSchema = new Schema({
 		type: Boolean,
 		required: true,
 	},
+	contactIn14Days: {
+		type: Boolean,
+		required: true,
+	},
 	comments: {
 		type: String,
 	},

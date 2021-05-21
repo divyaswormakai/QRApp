@@ -18,6 +18,7 @@ router.post('/add', async (req, res) => {
 			temperature,
 			cough,
 			abroadIn14Days,
+			contactIn14Days,
 			comments,
 		} = req.body;
 
@@ -31,6 +32,7 @@ router.post('/add', async (req, res) => {
 			temperature,
 			cough,
 			abroadIn14Days,
+			contactIn14Days,
 			comments,
 		});
 
