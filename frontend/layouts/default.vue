@@ -1,6 +1,9 @@
 <template>
   <div>
-    <Nuxt />
+    <div class="background"></div>
+    <div class="container">
+      <Nuxt />
+    </div>
   </div>
 </template>
 
@@ -22,6 +25,23 @@ html {
 *::after {
   box-sizing: border-box;
   margin: 0;
+}
+
+.background {
+  background: lavender;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  z-index: -1;
+}
+
+.container {
+  margin: 0 5%;
+  min-height: 100vh;
+  //padding: 0 5%;
+  //width: 100%;
+  padding: 2%;
+  background: white;
 }
 
 .button--green {
