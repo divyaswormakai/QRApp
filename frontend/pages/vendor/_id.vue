@@ -4,7 +4,7 @@
       This will be where individual form will be visible. Visible to vendor and
       admin
     </h1>
-    <div v-if="vendorLoaded">
+    <a-row v-if="vendorLoaded">
       <qrcode-vue
         :value="vendorFormURL"
         size="300"
@@ -15,7 +15,33 @@
         <nuxt-link :to="getQrcodeURL" target="_blank">Print this</nuxt-link>
       </a-button>
       <a :href="vendorFormURL">Go to new form</a>
-    </div>
+    </a-row>
+    <a-row v-if="vendorLoaded">
+      <table style="width: 100%">
+        <tbody>
+          <tr>
+            <td class="table-bold" width="30%">Name</td>
+            <td>{{ vendorDetails.vendorName }}</td>
+          </tr>
+          <tr>
+            <td class="table-bold">Email</td>
+            <td>{{ vendorDetails.vendorEmail }}</td>
+          </tr>
+          <tr>
+            <td class="table-bold">Location</td>
+            <td>{{ vendorDetails.vendorLocation }}</td>
+          </tr>
+          <tr>
+            <td class="table-bold">Primary Contact</td>
+            <td>{{ vendorDetails.vendorContact }}</td>
+          </tr>
+          <tr>
+            <td class="table-bold">Secondary Contact</td>
+            <td>{{ vendorDetails.vendorSecondaryContact }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </a-row>
   </div>
 </template>
 
@@ -40,6 +66,7 @@ export default {
     return {
       vendorFormURL: '',
       vendorLoaded: false,
+      vendorDetails: {},
     }
   },
   methods: {
@@ -47,16 +74,11 @@ export default {
       const result = await this.$axios.post('vendor/' + vendorID)
       if (result.data.vendorName) {
         this.vendorLoaded = true
+        this.vendorDetails = result.data
+        console.log(result.data)
       } else {
         this.$message.error('Could not fetch vendor data')
       }
-    },
-    printQRCode() {
-      // const printContent = document.getElementById('vendor-qrcode').innerHTML
-      // const originalContent = document.body.innerHTML
-      // document.body.innerHTML = printContent
-      window.print()
-      // document.body.innerHTML = originalContent
     },
   },
 }

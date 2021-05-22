@@ -76,4 +76,7 @@ html {
 .ant-form-item {
   margin-bottom: 0px;
 }
+.table-bold {
+  font-weight: bold;
+}
 </style>
