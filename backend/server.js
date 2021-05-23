@@ -11,9 +11,13 @@ const app = express();
 
 // Importing the routes
 const VendorRoute = require('./routes/VendorRoute');
-const SummaryRoute = require('./routes/summaryRoute');
 const FormRoute = require('./routes/FormRoute');
 const AdminRoute = require('./routes/AdminRoute');
+const LoginRoute = require('./routes/LoginRoute');
+
+// Middlewares
+const adminAuth = require('./middleware/adminAuth');
+const vendorAuth = require('./middleware/vendorAuth');
 
 app.use(
 	morgan(':method :url :status :res[content-length] - :response-time ms')
@@ -28,12 +32,12 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-// Apply the routes of /api/cpontent/work-experience
+// Apply the routes
 
-app.use('/summary', SummaryRoute);
-app.use('/api/vendor', VendorRoute);
 app.use('/api/form', FormRoute);
-app.use('/api/admin', AdminRoute);
+app.use('/api/login', LoginRoute);
+app.use('/api/vendor', vendorAuth, VendorRoute);
+app.use('/api/admin', adminAuth, AdminRoute);
 app.use('*', (req, res) =>
 	res.sendFile(path.join(`${__dirname}/build`, 'index.html'))
 );
@@ -46,7 +50,7 @@ mongoose
 	.connect(db, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
-		useFindAndModify: true,
+		useFindAndModify: false,
 	})
 	// If all run ok, console log the message
 	.then(() => console.log('MongoDB connected'))
