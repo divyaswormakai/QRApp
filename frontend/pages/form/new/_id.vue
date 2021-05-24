@@ -179,7 +179,6 @@ export default {
   methods: {
     async getVendorName() {
       const result = await this.$axios.post('vendor/' + this.vendorID)
-      console.log(result.data)
       if (result.data.vendorName) {
         this.vendorName = result.data.vendorName
       } else {
@@ -195,10 +194,12 @@ export default {
           this.$message.error('Could not submit form. Please try again.')
           return
         }
-        const postBody = {
+        let postBody = {
           ...this.form.getFieldsValue(),
           vendorID: this.vendorID,
         }
+        postBody.timeOfVisit = postBody.timeOfVisit.format('h:mm a')
+        console.log(postBody)
         const result = await this.$axios.post('form/add', postBody)
         if (result.data.vendorID) {
           this.$message.success('Your form has been recieved successfully')

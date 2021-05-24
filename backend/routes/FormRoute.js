@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Form = require('../models/Form');
+const vendorAuth = require('../middleware/vendorAuth');
 
 // @Route   POST api/form/add
 // @desc    Add new Form
@@ -65,7 +66,7 @@ router.post('/:id', async (req, res) => {
 // @Route   POST api/form/vendor/:vendorid
 // @desc    Get individual form
 // @access  Vendor
-router.post('/vendor/:id', async (req, res) => {
+router.post('/vendor/:id', vendorAuth, async (req, res) => {
 	try {
 		const vendorID = req.params.id;
 		const forms = await Form.find({ vendorID: vendorID }).populate('vendorID');

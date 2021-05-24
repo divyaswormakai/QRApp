@@ -18,7 +18,6 @@ const ErrorRoute = require('./routes/ErrorRoute');
 
 // Middlewares
 const adminAuth = require('./middleware/adminAuth');
-const vendorAuth = require('./middleware/vendorAuth');
 
 app.use(
 	morgan(':method :url :status :res[content-length] - :response-time ms')
@@ -37,7 +36,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 app.use('/api/form', FormRoute);
 app.use('/api/login', LoginRoute);
-app.use('/api/vendor', vendorAuth, VendorRoute);
+app.use('/api/vendor', VendorRoute);
 app.use('/api/admin', adminAuth, AdminRoute);
 app.use('/api/*', ErrorRoute);
 app.use('*', (req, res) =>

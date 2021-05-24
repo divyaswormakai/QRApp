@@ -148,7 +148,7 @@ export default {
           if (result.data.token) {
             this.$message.success(`Welcome ${result?.data?.vendor?.vendorName}`)
             localStorage.setItem(LOCAL_STORAGE_TOKEN, result.data.token)
-
+            this.$root.$emit('loginEvent')
             this.$router.push(`vendor/${result.data.vendor.id}`)
           }
         }
@@ -162,6 +162,8 @@ export default {
           const result = await this.$axios.post('login/admin', values)
           if (result.data.token) {
             localStorage.setItem(LOCAL_STORAGE_TOKEN, result.data.token)
+            this.$root.$emit('loginEvent')
+
             this.$router.push(`vendor`)
           }
         }
@@ -188,72 +190,5 @@ export default {
 #login-footer {
   color: white;
   font-style: italic;
-}
-.ant-switch {
-  margin: 10% 0px;
-  width: 100%;
-  padding: 10% 5%;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-self: center;
-}
-button.ant-switch::after {
-  height: 100%;
-  top: 0;
-}
-
-.ant-form-item {
-  margin: 5% 0px;
-}
-
-.ant-input {
-  padding: 20px 0px;
-  border-radius: 15px;
-}
-
-.ant-switch-inner {
-  font-size: 1.25rem;
-}
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-
-.ant-btn-primary {
-  height: 50px;
-  width: 200px;
-  background: darkslateblue;
-}
-.ant-btn {
-  height: 50px;
-  width: 200px;
 }
 </style>
