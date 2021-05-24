@@ -2,7 +2,7 @@ const { request, response } = require('express');
 const jwt = require('jsonwebtoken');
 const { secret } = require('../config/keys');
 const Vendor = require('../models/Vendor');
-
+const Admin = require('../models/Admin');
 module.exports = async (request, response, next) => {
 	try {
 		const token = request.header('x-auth-token');
@@ -14,7 +14,10 @@ module.exports = async (request, response, next) => {
 		const decodedToken = jwt.verify(token, secret);
 		const vendor = await Vendor.findById(decodedToken.id);
 		if (!vendor) {
-			throw new Error('You are not authorized. Use a vendor account.');
+			const admin = await Admin.findById(decodedToken.id);
+			if (!admin) {
+				throw new Error('You are not authorized. Use an admin account.');
+			}
 		}
 		request.vendor = vendor;
 

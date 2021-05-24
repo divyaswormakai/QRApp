@@ -29,22 +29,25 @@
 </template>
 
 <script>
-import { FORMS_ADMIN_COLUMNS } from '../../utils/constants'
+import { FORMS_ADMIN_COLUMNS } from '../../../utils/constants'
 
 export default {
   name: 'forms',
   mounted() {
+    const vendorID = window.location?.pathname?.split('/')[3]
+    this.vendorID = vendorID
     this.getFormList()
   },
   data() {
     return {
+      vendorID: '',
       formList: [],
       columns: FORMS_ADMIN_COLUMNS,
     }
   },
   methods: {
     async getFormList() {
-      const forms = await this.$axios.post('/admin/form')
+      const forms = await this.$axios.post('/form/vendor/' + this.vendorID)
       if (!Array.isArray(forms?.data)) {
         this.$message.error('Could not load form data.')
       }

@@ -73,3 +73,5 @@ export const FORMS_ADMIN_COLUMNS = [
     title: 'Time of Visit',
   },
 ]
+
+export const LOCAL_STORAGE_TOKEN = 'scanMeToken'

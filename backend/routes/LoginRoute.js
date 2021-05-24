@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 
 const Vendor = require('../models/Vendor');
 const Admin = require('../models/Admin');
-const { secret, adminSecret } = require('../config/keys');
+const { secret } = require('../config/keys');
 const jwt = require('jsonwebtoken');
 
 // @Route   POST api/login/vendor
@@ -26,7 +26,6 @@ router.post('/vendor', async (req, res) => {
 		if (!isPasswordMatch) {
 			throw new Error('Password do not match');
 		}
-		console.log(vendor);
 
 		if (!vendor.active) {
 			return res.status(201).json({
@@ -73,7 +72,7 @@ router.post('/admin', async (req, res) => {
 			username: admin.username,
 			id: admin._id,
 		};
-		const token = jwt.sign(adminDetails, adminSecret);
+		const token = jwt.sign(adminDetails, secret);
 		return res.status(200).send({ token });
 	} catch (err) {
 		return res.status(400).json({ error: err.message });

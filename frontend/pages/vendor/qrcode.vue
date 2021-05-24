@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="qr-container" id="qr-container">
+      <h4>Please scan this QR code for Contact Tracing</h4>
       <qrcode-vue
         v-if="vendorFormURL.length > 0"
         :value="vendorFormURL"

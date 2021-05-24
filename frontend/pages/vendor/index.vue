@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Vendors: Only for admin</h1>
+    <!--    Add a vendor     -->
     <a-button type="primary" @click="showAddFormModal">
       Add a new vendor
     </a-button>
@@ -25,6 +26,22 @@
                 ],
               },
             ]"
+        /></a-form-item>
+        <a-form-item label="Password for the vendor">
+          <a-input
+            v-decorator="[
+              'password',
+              {
+                rules: [
+                  {
+                    required: true,
+                    min: 4,
+                    message: 'Vendor Password should be at least 4 letters.',
+                  },
+                ],
+              },
+            ]"
+            type="password"
         /></a-form-item>
         <a-form-item label="Location of the vendor">
           <a-input
@@ -100,7 +117,7 @@
       </span>
     </a-table>
 
-    <!--    Edit a vendor-->
+    <!--    Edit a vendor     -->
     <a-modal
       title="Edit Details for the vendor"
       :visible="visibleEditForm"
@@ -122,6 +139,24 @@
                 ],
               },
             ]"
+        /></a-form-item>
+        <a-form-item label="Password for the vendor">
+          <a-input
+            v-decorator="[
+              'password',
+              {
+                rules: [
+                  {
+                    required: true,
+                    min: 4,
+                    message: 'Vendor Password should be at least 4 letters.',
+                  },
+                ],
+              },
+            ]"
+            type="password"
+            default=""
+            placeholder="Put the old password if you don't want to change password"
         /></a-form-item>
         <a-form-item label="Location of the vendor">
           <a-input
@@ -167,6 +202,20 @@
         <a-form-item label="Secondary Contact of the vendor">
           <a-input v-decorator="['vendorSecondaryContact']"
         /></a-form-item>
+        <a-form-item label="Is the vendor active?">
+          <a-radio-group
+            v-decorator="[
+              'active',
+              {
+                rules: [{ required: true, message: 'Please select one!' }],
+              },
+            ]"
+            button-style="solid"
+          >
+            <a-radio-button :value="true"> Yes </a-radio-button>
+            <a-radio-button :value="false"> No </a-radio-button>
+          </a-radio-group>
+        </a-form-item>
       </a-form>
     </a-modal>
   </div>
@@ -219,12 +268,9 @@ export default {
     },
     async handleVendorAddition(e) {
       this.confirmLoading = true
-      await this.form.validateFields(async (err) => {
+      await this.form.validateFields(async (err, values) => {
         if (!err) {
-          const result = await this.$axios.post(
-            'admin/vendor/add',
-            this.form.getFieldsValue()
-          )
+          const result = await this.$axios.post('admin/vendor/add', values)
           console.log(result)
           if (result?.status === 200) {
             this.vendorList.push(result?.data)
@@ -246,7 +292,7 @@ export default {
     },
     EditVendorAction(record) {
       this.visibleEditForm = true
-      console.log(record)
+
       Object.keys(record).forEach((recordKey) => {
         this.editForm.getFieldDecorator(recordKey, {
           initialValue: record[recordKey],

@@ -24,6 +24,7 @@
       <a
         slot="vendorName"
         slot-scope="text, record"
+        v-if="record.vendorID"
         :href="'/vendor/' + record.vendorID.id"
         >{{ record.vendorID.vendorName }}</a
       >
@@ -47,12 +48,12 @@ export default {
   },
   methods: {
     async getFormList() {
-      const forms = await this.$axios.post('/admin/form')
-      if (!Array.isArray(forms?.data)) {
-        this.$message('Could not load form data.')
+      const result = await this.$axios.post('/admin/form')
+      if (!Array.isArray(result?.data)) {
+        this.$message.error('Could not load form data.')
+      } else {
+        this.formList = [...result.data]
       }
-      this.formList = forms?.data
-      console.log(this.formList)
     },
   },
 }

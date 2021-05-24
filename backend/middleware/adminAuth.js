@@ -1,6 +1,6 @@
 const { request, response } = require('express');
 const jwt = require('jsonwebtoken');
-const { adminSecret } = require('../config/keys');
+const { secret } = require('../config/keys');
 const Admin = require('../models/Admin');
 
 module.exports = async (request, response, next) => {
@@ -11,7 +11,7 @@ module.exports = async (request, response, next) => {
 			throw new Error('You are not authorized. Use an admin account.');
 		}
 
-		const decodedToken = jwt.verify(token, adminSecret);
+		const decodedToken = jwt.verify(token, secret);
 		const admin = await Admin.findById(decodedToken.id);
 		if (!admin) {
 			throw new Error('You are not authorized. Use an admin account.');

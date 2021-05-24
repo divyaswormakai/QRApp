@@ -14,6 +14,7 @@ const VendorRoute = require('./routes/VendorRoute');
 const FormRoute = require('./routes/FormRoute');
 const AdminRoute = require('./routes/AdminRoute');
 const LoginRoute = require('./routes/LoginRoute');
+const ErrorRoute = require('./routes/ErrorRoute');
 
 // Middlewares
 const adminAuth = require('./middleware/adminAuth');
@@ -38,6 +39,7 @@ app.use('/api/form', FormRoute);
 app.use('/api/login', LoginRoute);
 app.use('/api/vendor', vendorAuth, VendorRoute);
 app.use('/api/admin', adminAuth, AdminRoute);
+app.use('/api/*', ErrorRoute);
 app.use('*', (req, res) =>
 	res.sendFile(path.join(`${__dirname}/build`, 'index.html'))
 );

@@ -15,6 +15,11 @@
         <nuxt-link :to="getQrcodeURL" target="_blank">Print this</nuxt-link>
       </a-button>
       <a :href="vendorFormURL">Go to new form</a>
+      <a-button
+        ><nuxt-link :to="vendorSubmittedFormURL"
+          >See all submitted forms</nuxt-link
+        ></a-button
+      >
     </a-row>
     <a-row v-if="vendorLoaded">
       <table style="width: 100%">
@@ -60,6 +65,9 @@ export default {
   computed: {
     getQrcodeURL() {
       return '/vendor/qrcode/?url=' + this.vendorFormURL
+    },
+    vendorSubmittedFormURL() {
+      return '/vendor/forms/' + window.location.pathname.split('/')[2]
     },
   },
   data() {

@@ -75,7 +75,6 @@ router.post('/vendor/add', async (req, res) => {
 		}
 		return res.status(200).json(savedVendor.toJSON());
 	} catch (err) {
-		console.log(err.message);
 		return res.status(400).json({ error: 'Could not add new vendor data.' });
 	}
 });
