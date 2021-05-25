@@ -15,6 +15,7 @@
       class="login-form"
       @submit="handleSubmit"
       v-if="!isAdmin"
+      :scroll="{ x: 1200 }"
     >
       <a-form-item>
         <a-input
@@ -117,7 +118,10 @@
 </template>
 
 <script>
-import { LOCAL_STORAGE_TOKEN } from '../utils/constants'
+import {
+  LOCAL_STORAGE_TOKEN,
+  LOCAL_STORAGE_VENDOR_TOKEN,
+} from '../utils/constants'
 
 export default {
   beforeCreate() {
@@ -143,11 +147,11 @@ export default {
       e.preventDefault()
       await this.vendorLoginForm.validateFields(async (err, values) => {
         if (!err) {
-          console.log(values)
           const result = await this.$axios.post('login/vendor', values)
           if (result.data.token) {
             this.$message.success(`Welcome ${result?.data?.vendor?.vendorName}`)
             localStorage.setItem(LOCAL_STORAGE_TOKEN, result.data.token)
+            localStorage.setItem(LOCAL_STORAGE_VENDOR_TOKEN, 'true')
             this.$root.$emit('loginEvent')
             this.$router.push(`vendor/${result.data.vendor.id}`)
           }
@@ -158,12 +162,10 @@ export default {
       e.preventDefault()
       await this.adminLoginForm.validateFields(async (err, values) => {
         if (!err) {
-          console.log(values)
           const result = await this.$axios.post('login/admin', values)
           if (result.data.token) {
             localStorage.setItem(LOCAL_STORAGE_TOKEN, result.data.token)
             this.$root.$emit('loginEvent')
-
             this.$router.push(`vendor`)
           }
         }

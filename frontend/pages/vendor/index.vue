@@ -95,6 +95,7 @@
     <a-table
       :columns="columns"
       :data-source="vendorList"
+      :scroll="{ x: 1200 }"
       :rowKey="(record) => record.id"
     >
       <a

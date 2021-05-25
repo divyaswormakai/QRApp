@@ -4,7 +4,14 @@
       <a href="/">
         <img src="~assets/esociety-logo.svg" alt="E-society logo" width="150" />
       </a>
-      <a @click="LogoutHandler()" class="logout-link">Logout</a>
+      <div style="flex-direction: row; display: flex">
+        <div v-if="!isVendor" class="logout-link">
+          <a href="/vendor" class="logout-link">Vendor </a>|
+          <a href="/form" class="logout-link"> Forms </a>|&nbsp;
+        </div>
+
+        <a @click="LogoutHandler()" class="logout-link"> Logout</a>
+      </div>
     </div>
     <div class="container">
       <Nuxt />
@@ -13,7 +20,10 @@
 </template>
 
 <script>
-import { LOCAL_STORAGE_TOKEN } from '../utils/constants'
+import {
+  LOCAL_STORAGE_TOKEN,
+  LOCAL_STORAGE_VENDOR_TOKEN,
+} from '../utils/constants'
 
 export default {
   mounted() {
@@ -26,12 +36,14 @@ export default {
   data() {
     return {
       loggedIn: false,
+      isVendor: false,
     }
   },
 
   methods: {
     LogoutHandler() {
       localStorage.removeItem(LOCAL_STORAGE_TOKEN)
+      localStorage.removeItem(LOCAL_STORAGE_VENDOR_TOKEN)
       this.$message.success('Logged out')
       this.loggedIn = false
       this.$router.push('/')
@@ -41,6 +53,10 @@ export default {
         localStorage &&
         localStorage.getItem(LOCAL_STORAGE_TOKEN) &&
         localStorage.getItem(LOCAL_STORAGE_TOKEN).length > 0
+      this.isVendor =
+        localStorage &&
+        localStorage.getItem(LOCAL_STORAGE_VENDOR_TOKEN) &&
+        localStorage.getItem(LOCAL_STORAGE_VENDOR_TOKEN).length > 0
     },
   },
 }
@@ -141,12 +157,15 @@ button.ant-switch::after {
 }
 
 .ant-form-item {
-  margin: 5% 0px;
+  margin: 1% 0px;
 }
 
 .ant-input {
-  padding: 20px 0px;
+  padding: 200px 100px;
   border-radius: 15px;
+  min-width: 400px;
+  min-height: 50px;
+  margin: 1% 0px;
 }
 
 .ant-switch-inner {
@@ -154,10 +173,8 @@ button.ant-switch::after {
 }
 .container {
   margin: 0 auto;
-  min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
   text-align: center;
 }
 
@@ -183,13 +200,183 @@ button.ant-switch::after {
   padding-top: 15px;
 }
 
-.ant-btn-primary {
-  height: 50px;
-  width: 200px;
-  background: darkslateblue;
+.ant-layout-header a {
+  font-weight: 500;
 }
+
+.header-brand {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 2% 0%;
+  overflow-x: scroll;
+  //width: 1200px;
+  min-width: 100%;
+  table-layout: auto;
+}
+
+th {
+  font-weight: 600;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+.ant-layout-header {
+  background: #fff;
+}
+
+.ant-table-title {
+  padding: 16px 0px;
+  color: #3e7ffc;
+  font-size: 18px;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table-responsive .table-p8 {
+  min-width: 400px;
+}
+
+.ant-steps-item-container {
+  padding: 8px 0px;
+}
+
+.ant-steps-item-wait .ant-steps-item-icon {
+  border: none;
+}
+
+.ant-steps-item-icon {
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(184, 209, 233, 0.42);
+}
+
+.ant-table table {
+  border-collapse: collapse;
+}
+
+.ant-form-item-label > label {
+  color: #6c757d;
+}
+
+.steps-content {
+  padding: 2% 0px;
+  width: 100%;
+}
+
+input.nepali-datepicker {
+  width: 100%;
+}
+
+input {
+  line-height: 1.5715;
+}
+
+input:focus {
+  -webkit-box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+input,
+.ant-input {
+  background: rgba(244, 250, 255, 1);
+  border-radius: 8px;
+  padding: 8px 11px;
+  outline: none;
+  border: none;
+  border: 1px solid rgba(167, 182, 211, 0.69);
+}
+
+input:focus,
+.ant-input:focus {
+  outline: none;
+  border: none;
+  background: rgba(255, 255, 255, 1);
+}
+
+.ant-select:not(.ant-select-customize-input) .ant-select-selector,
+.ant-cascader-input.ant-input,
+.ant-input-number-input,
+.ant-input-number {
+  background: rgba(244, 250, 255, 1) !important;
+  border-radius: 8px;
+  /* padding: 8px 11px; */
+  outline: none;
+  border: none;
+  border: 1px solid rgba(167, 182, 211, 0.69);
+}
+
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector,
+.ant-input-number-input {
+  min-height: 41.15px;
+}
+
+.ant-select-single .ant-select-selector .ant-select-selection-item,
+.ant-select-single .ant-select-selector .ant-select-selection-placeholder {
+  line-height: 41.15px;
+}
+
+td .ant-select {
+  width: 100%;
+}
+
 .ant-btn {
-  height: 50px;
-  width: 200px;
+  border-radius: 8px;
+  padding: 15px 72px;
+  height: auto;
+}
+
+.ant-btn-sm {
+  padding: 15px 36px;
+  margin: 0px 5px;
+}
+
+.ant-btn-xs {
+  padding: 0px 5px;
+  margin: 0px 5px;
+}
+
+.ant-table-wrapper {
+  max-width: 90vw;
+}
+
+@media (max-width: 400px) {
+  .container {
+    width: 100%;
+  }
 }
 </style>

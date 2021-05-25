@@ -6,6 +6,7 @@
       :columns="columns"
       :data-source="formList"
       :rowKey="(record) => record.id"
+      :scroll="{ x: 1200 }"
     >
       <span slot="formID" slot-scope="text, record, index">{{
         index + 1
