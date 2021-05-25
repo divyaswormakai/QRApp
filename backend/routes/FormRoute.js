@@ -4,6 +4,8 @@ const router = express.Router();
 const Form = require('../models/Form');
 const vendorAuth = require('../middleware/vendorAuth');
 
+const awsSES = require('../controller/awsSES');
+
 // @Route   POST api/form/add
 // @desc    Add new Form
 // @access  Public
@@ -41,6 +43,7 @@ router.post('/add', async (req, res) => {
 		if (!savedForm) {
 			res.status(400).json({ error: 'Could not save form data.' });
 		}
+		await awsSES.emailViaAWS_SES(savedForm);
 		res.status(200).json(savedForm.toJSON());
 	} catch (err) {
 		res.status(400).json({ error: 'Could not add new form data.' });
