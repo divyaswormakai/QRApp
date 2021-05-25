@@ -6,6 +6,8 @@ const cors = require('cors');
 const path = require('path');
 const morgan = require('morgan');
 
+require('dotenv').config();
+
 // Create an instance for express
 const app = express();
 
@@ -45,6 +47,7 @@ app.use('*', (req, res) =>
 
 // Get the mongoURI for database
 const db = require('./config/keys').mongoURI;
+const { exit } = require('process');
 
 // Connecting with database
 mongoose

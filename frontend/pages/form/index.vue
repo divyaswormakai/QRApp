@@ -54,7 +54,7 @@ export default {
       let csvContent = 'data:text/csv;charset=utf-8,'
       csvContent += [
         [
-          'id',
+          'S.No.',
           'Full Name',
           'Phone Number',
           'Email',
@@ -90,7 +90,7 @@ export default {
       const data = encodeURI(csvContent)
       const link = document.createElement('a')
       link.setAttribute('href', data)
-      link.setAttribute('download', 'export.csv')
+      link.setAttribute('download', 'forms.csv')
       link.click()
     },
     async getFormList() {

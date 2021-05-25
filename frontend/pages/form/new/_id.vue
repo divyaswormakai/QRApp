@@ -198,8 +198,7 @@ export default {
           ...this.form.getFieldsValue(),
           vendorID: this.vendorID,
         }
-        postBody.timeOfVisit = postBody.timeOfVisit.format('h:mm a')
-        console.log(postBody)
+        postBody.timeOfVisit = postBody.timeOfVisit.format('h:mm a').toString()
         const result = await this.$axios.post('form/add', postBody)
         if (result.data.vendorID) {
           this.$message.success('Your form has been recieved successfully')

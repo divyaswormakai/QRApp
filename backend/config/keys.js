@@ -1,8 +1,10 @@
+require('dotenv').config();
+
 module.exports = {
-	mongoURI:
-		process.env.MONGO_URI ||
-		'mongodb+srv://Test108:Test108@cluster0.ausqe.mongodb.net/scanMe?retryWrites=true&w=majority',
-	saltRound: process.env.SALTROUND || 13,
-	secret: process.env.SECRET || 'esociety',
-	adminSaltRound: process.env.ADMINSALT_ROUND || 10,
+	mongoURI: process.env.MONGO_URI,
+	saltRound: process.env.SALTROUND,
+	secret: process.env.SECRET,
+	adminSaltRound: process.env.ADMINSALT_ROUND,
+	aws_access_key_id: process.env.AWS_SECRET_KEY_ID,
+	aws_secret_access_key: process.env.AWS_SECRET_ACCESS_KEY,
 };

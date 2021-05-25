@@ -90,6 +90,8 @@
       </a-form>
     </a-modal>
 
+    <a-button @click="downloadCSV()">Download CSV</a-button>
+
     <a-table
       :columns="columns"
       :data-source="vendorList"
@@ -245,12 +247,46 @@ export default {
     }
   },
   methods: {
+    downloadCSV() {
+      let csvContent = 'data:text/csv;charset=utf-8,'
+      csvContent += [
+        [
+          'S.No.',
+          'Vendor Name',
+          'Vendor Location',
+          'Vendor Email',
+          'Vendor Contact',
+          'Vendor Secondary Contact',
+          'Is Vendor Active?',
+        ].join(','),
+        ...this.vendorList.map((item, index) =>
+          [
+            index + 1,
+            item.vendorName,
+            item.vendorLocation,
+            item.vendorEmail,
+            item.vendorContact,
+            item.vendorSecondaryContact,
+            item.active ? 'Yes' : 'No',
+          ].join(',')
+        ),
+      ]
+        .join('\n')
+        .replace(/(^\[)|(\]$)/gm, '')
+
+      const data = encodeURI(csvContent)
+      const link = document.createElement('a')
+      link.setAttribute('href', data)
+      link.setAttribute('download', 'vendors.csv')
+      link.click()
+    },
     async getVendorList() {
       const vendors = await this.$axios.post('/admin/vendor')
       if (!Array.isArray(vendors?.data)) {
         this.$message.error('Could not load data')
         return
       }
+      console.log(vendors.data)
       this.vendorList = vendors?.data
     },
     async deleteVendor(record) {
