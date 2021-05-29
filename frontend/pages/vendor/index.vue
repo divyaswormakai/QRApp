@@ -228,6 +228,7 @@
 import { VENDOR_COLUMNS } from '../../utils/constants'
 
 export default {
+  middleware: ['adminAuth'],
   name: 'index',
   mounted() {
     this.getVendorList()
@@ -287,12 +288,10 @@ export default {
         this.$message.error('Could not load data')
         return
       }
-      console.log(vendors.data)
       this.vendorList = vendors?.data
     },
     async deleteVendor(record) {
       const result = await this.$axios.delete(`admin/vendor/${record?.id}`)
-      console.log(result)
       if (result?.status === 200) {
         this.$message.success('Successfully deleted' + record?.vendorName)
         this.vendorList = this.vendorList.filter(
@@ -308,7 +307,6 @@ export default {
       await this.form.validateFields(async (err, values) => {
         if (!err) {
           const result = await this.$axios.post('admin/vendor/add', values)
-          console.log(result)
           if (result?.status === 200) {
             this.vendorList.push(result?.data)
             this.form.resetFields()
@@ -326,6 +324,7 @@ export default {
     handleCancel(e) {
       this.visibleAddForm = false
       this.visibleEditForm = false
+      this.confirmLoading = false
     },
     EditVendorAction(record) {
       this.visibleEditForm = true

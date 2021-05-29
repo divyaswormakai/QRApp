@@ -41,6 +41,8 @@ const $ = require('jquery')
 
 export default {
   name: 'index',
+  middleware: ['adminAuth'],
+
   mounted() {
     this.getFormList()
   },
@@ -66,6 +68,7 @@ export default {
           'Do you have cough?',
           'Have you travelled abord in past 14 days?',
           'Have you been in positive contact in 14 days?',
+          'How many people were there in your table/group?',
           'Comments',
         ].join(','),
         ...this.formList.map((item, index) =>
@@ -81,6 +84,7 @@ export default {
             item.cough ? 'Yes' : 'No',
             item.abroadIn14Days ? 'Yes' : 'No',
             item.contactIn14Days ? 'Yes' : 'No',
+            item.noOfPeopleInGroup,
             item.comments,
           ].join(',')
         ),
@@ -100,7 +104,6 @@ export default {
         this.$message.error('Could not load form data.')
       } else {
         this.formList = [...result.data]
-        console.log(this.formList)
       }
     },
   },

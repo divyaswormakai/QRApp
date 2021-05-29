@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'frontend',
+    title: 'Scan Me',
     htmlAttrs: {
       lang: 'en',
     },
@@ -29,6 +29,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    ['cookie-universal-nuxt', { alias: 'cookies' }],
   ],
 
   //axios
@@ -39,5 +40,5 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 
-  router: {},
+  middleware: ['auth', 'adminAuth', 'vendorAuth'],
 }

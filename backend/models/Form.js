@@ -44,6 +44,9 @@ const FormSchema = new Schema({
 		type: Boolean,
 		required: true,
 	},
+	noOfPeopleInGroup: {
+		type: Number,
+	},
 	comments: {
 		type: String,
 	},

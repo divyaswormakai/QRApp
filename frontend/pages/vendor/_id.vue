@@ -14,7 +14,6 @@
       <a-button type="primary">
         <nuxt-link :to="getQrcodeURL" target="_blank">Print this</nuxt-link>
       </a-button>
-      <a :href="vendorFormURL">Go to new form</a>
       <a-button
         ><nuxt-link :to="vendorSubmittedFormURL"
           >See all submitted forms</nuxt-link
@@ -54,7 +53,8 @@
 import QrcodeVue from 'qrcode.vue'
 
 export default {
-  //  TODO: Show the details of the vendor in a table or however you want. just show only
+  middleware: ['vendorAuth'],
+
   name: 'VendorIndividualComponent',
   components: { QrcodeVue },
   mounted() {
@@ -83,7 +83,6 @@ export default {
       if (result.data.vendorName) {
         this.vendorLoaded = true
         this.vendorDetails = result.data
-        console.log(result.data)
       } else {
         this.$message.error('Could not fetch vendor data')
       }

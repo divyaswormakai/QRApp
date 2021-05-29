@@ -88,4 +88,5 @@ export const FORMS_ADMIN_COLUMNS = [
 ]
 
 export const LOCAL_STORAGE_TOKEN = 'scanMeToken'
-export const LOCAL_STORAGE_VENDOR_TOKEN = 'scanMeVendor'
+export const LOCAL_STORAGE_ROLE_TYPE = 'scanMeRole'
+export const LOCAL_STORAGE_VENDOR_ID = 'scanMeVendorID'

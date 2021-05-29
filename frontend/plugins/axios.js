@@ -1,9 +1,12 @@
 import { message } from 'ant-design-vue'
 import { LOCAL_STORAGE_TOKEN } from '../utils/constants'
 
-export default function ({ $axios, redirect }) {
+export default function ({ $axios, redirect, app }) {
   $axios.onRequest((config) => {
-    $axios.setHeader('x-auth-token', localStorage.getItem(LOCAL_STORAGE_TOKEN))
+    $axios.setHeader(
+      'x-auth-token',
+      app.context.app.$cookies.get(LOCAL_STORAGE_TOKEN)
+    )
   })
   $axios.onResponse((response) => {
     if ([400, 401].includes(response.status)) {

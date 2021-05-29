@@ -8,6 +8,9 @@ const morgan = require('morgan');
 
 require('dotenv').config();
 
+// Cron job import
+const cron = require('node-cron');
+
 // Create an instance for express
 const app = express();
 
@@ -20,6 +23,9 @@ const ErrorRoute = require('./routes/ErrorRoute');
 
 // Middlewares
 const adminAuth = require('./middleware/adminAuth');
+
+// AWS Service
+const awsSES = require('./controller/awsSES');
 
 app.use(
 	morgan(':method :url :status :res[content-length] - :response-time ms')
@@ -66,3 +72,9 @@ const port = process.env.PORT || 3001;
 
 // Init the express.js server
 app.listen(port, () => console.log(`Server running on ${port}`));
+
+// Schedule cron job
+cron.schedule('30 23  * * *', () => {
+	// SEND MAIL TO ALL ACTIVE VENDORS WITH LIST OF FORMS THAT THEY HAVE BEEN SUBMITTED
+	awsSES.vendorEmailAWS_SES();
+});

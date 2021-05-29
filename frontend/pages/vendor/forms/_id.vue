@@ -35,6 +35,7 @@ import { FORMS_ADMIN_COLUMNS } from '../../../utils/constants'
 
 export default {
   name: 'forms',
+  middleware: ['vendorAuth'],
   mounted() {
     const vendorID = window.location?.pathname?.split('/')[3]
     this.vendorID = vendorID
@@ -97,7 +98,6 @@ export default {
         this.$message.error('Could not load form data.')
       }
       this.formList = forms?.data
-      console.log(this.formList)
     },
   },
 }

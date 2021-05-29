@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="qr-container" id="qr-container">
-      <h4>Please scan this QR code for Contact Tracing</h4>
+      <h2>Please scan this QR code for Contact Tracing Form</h2>
       <qrcode-vue
         v-if="vendorFormURL.length > 0"
         :value="vendorFormURL"
@@ -10,20 +10,27 @@
         id="vendor-qrcode"
       ></qrcode-vue>
       <nuxt-link :to="vendorFormURL">{{ vendorFormURL }}</nuxt-link>
+      <h4>Powered by:</h4>
+      <img src="~assets/esociety-logo.svg" alt="E-society logo" width="100" />
+
+      <h2>sadfasdf</h2>
     </div>
-    <a-button type="primary" @click="printQRCode" id="print-btn"
-      >Print QR Code</a-button
+
+    <a-button type="primary" @click="downloadPNGQR" id="png-btn"
+      >Save PNG</a-button
     >
+    <div id="img-out"></div>
   </div>
 </template>
 
 <script>
 import QrcodeVue from 'qrcode.vue'
+import * as htmlToImage from 'html-to-image'
 
 export default {
   name: 'qrcode',
   components: { QrcodeVue },
-
+  middleware: ['vendorAuth'],
   mounted() {
     if (!this.$route.query.url) {
       this.$message.error('QR code could not be generated')
@@ -37,10 +44,15 @@ export default {
     }
   },
   methods: {
-    printQRCode() {
-      document.getElementById('print-btn').style.visibility = 'hidden'
-      window.print()
-      document.getElementById('print-btn').style.visibility = 'block'
+    downloadPNGQR() {
+      htmlToImage
+        .toJpeg(document.getElementById('qr-container'), { quality: 0.95 })
+        .then(function (dataUrl) {
+          var link = document.createElement('a')
+          link.download = 'my-image-name.jpeg'
+          link.href = dataUrl
+          link.click()
+        })
     },
   },
 }
@@ -52,5 +64,16 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: slategray;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+a {
+  color: white;
+  font-size: 14px;
+}
+h2,
+h4 {
+  color: white;
 }
 </style>

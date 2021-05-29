@@ -49,6 +49,12 @@
           <td>{{ formDetails.contactIn14Days ? 'Yes' : 'No' }}</td>
         </tr>
         <tr>
+          <td class="table-bold">
+            How many people were there in your table/group?
+          </td>
+          <td>{{ formDetails.noOfPeopleInGroup || '-' }}</td>
+        </tr>
+        <tr>
           <td class="table-bold">Comments</td>
           <td>{{ formDetails.commments || '' }}</td>
         </tr>
@@ -59,8 +65,9 @@
 
 <script>
 export default {
-  //  TODO: Show the details of the form like in table here
   name: 'FormIndividualComponent',
+  middleware: ['vendorAuth'],
+
   mounted() {
     const formID = window.location.pathname.split('/')[2]
     this.getFormDetails(formID)
@@ -82,7 +89,6 @@ export default {
       const result = await this.$axios.post('form/' + formID)
       if (result.data.fullName) {
         this.formDetails = result.data
-        console.log(result.data)
         this.formLoaded = true
       } else {
         this.$message.error('Could not load form data. Try again!!!')

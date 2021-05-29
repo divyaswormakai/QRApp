@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="navbar" v-if="loggedIn">
+    <div class="navbar" id="navbar" v-if="loggedIn">
       <a href="/">
         <img src="~assets/esociety-logo.svg" alt="E-society logo" width="150" />
       </a>
@@ -22,7 +22,8 @@
 <script>
 import {
   LOCAL_STORAGE_TOKEN,
-  LOCAL_STORAGE_VENDOR_TOKEN,
+  LOCAL_STORAGE_ROLE_TYPE,
+  LOCAL_STORAGE_VENDOR_ID,
 } from '../utils/constants'
 
 export default {
@@ -42,21 +43,19 @@ export default {
 
   methods: {
     LogoutHandler() {
-      localStorage.removeItem(LOCAL_STORAGE_TOKEN)
-      localStorage.removeItem(LOCAL_STORAGE_VENDOR_TOKEN)
+      this.$cookies.remove(LOCAL_STORAGE_TOKEN)
+      this.$cookies.remove(LOCAL_STORAGE_ROLE_TYPE)
       this.$message.success('Logged out')
       this.loggedIn = false
       this.$router.push('/')
     },
     getLoggedInStatus() {
       this.loggedIn =
-        localStorage &&
-        localStorage.getItem(LOCAL_STORAGE_TOKEN) &&
-        localStorage.getItem(LOCAL_STORAGE_TOKEN).length > 0
+        this.$cookies.get(LOCAL_STORAGE_TOKEN) &&
+        this.$cookies.get(LOCAL_STORAGE_TOKEN).length > 0
       this.isVendor =
-        localStorage &&
-        localStorage.getItem(LOCAL_STORAGE_VENDOR_TOKEN) &&
-        localStorage.getItem(LOCAL_STORAGE_VENDOR_TOKEN).length > 0
+        this.$cookies.get(LOCAL_STORAGE_ROLE_TYPE) &&
+        this.$cookies.get(LOCAL_STORAGE_ROLE_TYPE) === 'vendor'
     },
   },
 }

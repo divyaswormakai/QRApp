@@ -22,6 +22,7 @@ router.post('/add', async (req, res) => {
 			cough,
 			abroadIn14Days,
 			contactIn14Days,
+			noOfPeopleInGroup,
 			comments,
 		} = req.body;
 
@@ -36,6 +37,7 @@ router.post('/add', async (req, res) => {
 			cough,
 			abroadIn14Days,
 			contactIn14Days,
+			noOfPeopleInGroup,
 			comments,
 		});
 
@@ -43,9 +45,13 @@ router.post('/add', async (req, res) => {
 		if (!savedForm) {
 			res.status(400).json({ error: 'Could not save form data.' });
 		}
-		await awsSES.emailViaAWS_SES(savedForm);
+		const savedFormPopulated = await savedForm
+			.populate('vendorID')
+			.execPopulate();
+		await awsSES.emailViaAWS_SES(savedFormPopulated);
 		res.status(200).json(savedForm.toJSON());
 	} catch (err) {
+		console.log(err);
 		res.status(400).json({ error: 'Could not add new form data.' });
 	}
 });

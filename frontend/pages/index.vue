@@ -120,10 +120,13 @@
 <script>
 import {
   LOCAL_STORAGE_TOKEN,
-  LOCAL_STORAGE_VENDOR_TOKEN,
+  LOCAL_STORAGE_ROLE_TYPE,
+  LOCAL_STORAGE_VENDOR_ID,
 } from '../utils/constants'
 
 export default {
+  middleware: ['auth'],
+
   beforeCreate() {
     this.vendorLoginForm = this.$form.createForm(this, {
       name: 'vendor_login_form',
@@ -150,8 +153,10 @@ export default {
           const result = await this.$axios.post('login/vendor', values)
           if (result.data.token) {
             this.$message.success(`Welcome ${result?.data?.vendor?.vendorName}`)
-            localStorage.setItem(LOCAL_STORAGE_TOKEN, result.data.token)
-            localStorage.setItem(LOCAL_STORAGE_VENDOR_TOKEN, 'true')
+
+            this.$cookies.set(LOCAL_STORAGE_TOKEN, result.data.token)
+            this.$cookies.set(LOCAL_STORAGE_ROLE_TYPE, 'vendor')
+            this.$cookies.set(LOCAL_STORAGE_VENDOR_ID, result.data.vendor.id)
             this.$root.$emit('loginEvent')
             this.$router.push(`vendor/${result.data.vendor.id}`)
           }
@@ -164,7 +169,8 @@ export default {
         if (!err) {
           const result = await this.$axios.post('login/admin', values)
           if (result.data.token) {
-            localStorage.setItem(LOCAL_STORAGE_TOKEN, result.data.token)
+            this.$cookies.set(LOCAL_STORAGE_TOKEN, result.data.token)
+            this.$cookies.set(LOCAL_STORAGE_ROLE_TYPE, 'admin')
             this.$root.$emit('loginEvent')
             this.$router.push(`vendor`)
           }
