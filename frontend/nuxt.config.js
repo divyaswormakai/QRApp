@@ -34,7 +34,9 @@ export default {
 
   //axios
   axios: {
-    baseURL: process.env.BASEURL || 'http://localhost:3001/api/',
+    baseURL:
+      process.env.BASEURL ||
+      'http://scanme-env-1.eba-zqpkjpsg.eu-west-1.elasticbeanstalk.com/api/',
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

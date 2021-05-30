@@ -35,7 +35,7 @@ import { FORMS_ADMIN_COLUMNS } from '../../../utils/constants'
 
 export default {
   name: 'forms',
-  middleware: ['vendorAuth'],
+  // middleware: ['vendorAuth'],
   mounted() {
     const vendorID = window.location?.pathname?.split('/')[3]
     this.vendorID = vendorID

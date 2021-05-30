@@ -2,7 +2,7 @@ require('dotenv').config();
 
 module.exports = {
 	mongoURI: process.env.MONGO_URI,
-	saltRound: 10,
+	saltRound: 10 || process.env.SALTROUND,
 	secret: process.env.SECRET,
 	adminSaltRound: 13,
 	aws_access_key_id: process.env.AWS_SECRET_KEY_ID,

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="navbar" id="navbar" v-if="loggedIn">
+    <div class="navbar" id="navbar" v-show="loggedIn">
       <a href="/">
         <img src="~assets/esociety-logo.svg" alt="E-society logo" width="150" />
       </a>
       <div style="flex-direction: row; display: flex">
-        <div v-if="!isVendor" class="logout-link">
+        <div v-show="!isVendor" class="logout-link">
           <a href="/vendor" class="logout-link">Vendor </a>|
           <a href="/form" class="logout-link"> Forms </a>|&nbsp;
         </div>

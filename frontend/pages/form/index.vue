@@ -23,12 +23,15 @@
       <span slot="dateOfVisit" slot-scope="text, record">
         {{ text.split('T')[0] }}
       </span>
+      <p slot="vendorName" slot-scope="text, record" v-show="!record.vendorID">
+        {{ 'Deleted' }}
+      </p>
       <a
         slot="vendorName"
         slot-scope="text, record"
-        v-if="record.vendorID"
+        v-show="record.vendorID"
         :href="'/vendor/' + record.vendorID.id"
-        >{{ record.vendorID.vendorName }}</a
+        >{{ record.vendorID.vendorName || 'Deleted' }}</a
       >
     </a-table>
   </div>
@@ -104,6 +107,7 @@ export default {
         this.$message.error('Could not load form data.')
       } else {
         this.formList = [...result.data]
+        console.log(this.formList)
       }
     },
   },

@@ -3,13 +3,13 @@
     <div class="qr-container" id="qr-container">
       <h2>Please scan this QR code for Contact Tracing Form</h2>
       <qrcode-vue
-        v-if="vendorFormURL.length > 0"
+        v-show="vendorFormURL.length > 0"
         :value="vendorFormURL"
         size="400"
         class="vendor-qrcode"
         id="vendor-qrcode"
       ></qrcode-vue>
-      <nuxt-link :to="vendorFormURL">{{ vendorFormURL }}</nuxt-link>
+      <a :href="vendorFormURL" target="_blank">{{ vendorFormURL }}</a>
       <h4>Powered by:</h4>
       <img src="~assets/esociety-logo.svg" alt="E-society logo" width="100" />
 

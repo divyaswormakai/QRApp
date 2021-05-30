@@ -4,7 +4,7 @@
       This will be where individual form will be visible. Visible to vendor and
       admin
     </h1>
-    <table v-if="formLoaded">
+    <table v-show="formLoaded">
       <tbody>
         <tr>
           <td class="table-bold">Full Name</td>

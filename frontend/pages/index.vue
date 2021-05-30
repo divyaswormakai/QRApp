@@ -14,7 +14,7 @@
       :form="vendorLoginForm"
       class="login-form"
       @submit="handleSubmit"
-      v-if="!isAdmin"
+      v-show="!isAdmin"
       :scroll="{ x: 1200 }"
     >
       <a-form-item>
@@ -65,7 +65,7 @@
       :form="adminLoginForm"
       class="login-form"
       @submit="handleAdminLogin"
-      v-else
+      v-show="isAdmin"
     >
       <a-form-item>
         <a-input
@@ -125,9 +125,22 @@ import {
 } from '../utils/constants'
 
 export default {
-  middleware: ['auth'],
-
   beforeCreate() {
+    switch (this.$cookies.get(LOCAL_STORAGE_ROLE_TYPE)) {
+      case 'vendor': {
+        this.$router.push(
+          '/vendor/' + this.$cookies.get(LOCAL_STORAGE_VENDOR_ID)
+        )
+        break
+      }
+      case 'admin': {
+        this.$router.push('/vendor')
+        break
+      }
+      default: {
+        break
+      }
+    }
     this.vendorLoginForm = this.$form.createForm(this, {
       name: 'vendor_login_form',
     })

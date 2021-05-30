@@ -241,10 +241,10 @@ export default {
       //  Data elements for add modal
       visibleAddForm: false,
       confirmLoading: false,
-      form: this.$form.createForm(this, { name: 'dynamic_rule' }),
+      form: this.$form.createForm(this, { name: 'form' }),
       //  Data elements for edit modal
       visibleEditForm: false,
-      editForm: this.$form.createForm(this, { name: 'dynamic_rule' }),
+      editForm: this.$form.createForm(this, { name: 'editForm' }),
       activeVendorID: '',
     }
   },

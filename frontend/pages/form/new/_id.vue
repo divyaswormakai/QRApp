@@ -1,14 +1,18 @@
 <template>
   <div>
     <h2>Please fill in the form below:</h2>
-    <div v-if="formSubmitted">
+    <div v-show="formSubmitted">
       <h4>
         Your form has been submitted. You will receive a copy of the form that
         you have submitted in the given email address
       </h4>
       <i>You can close this window.</i>
     </div>
-    <a-form :form="form" @submit="handleNewFormAddition" v-else>
+    <a-form
+      :form="form"
+      @submit="handleNewFormAddition"
+      v-show="!formSubmitted"
+    >
       <p>
         <b> Data Protection Notice:</b> Your personal data is being collected on
         this form in order to help prevent the spread of COVID-19 in our
