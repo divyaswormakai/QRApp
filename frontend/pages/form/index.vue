@@ -1,15 +1,13 @@
 <template>
   <div>
-    <h1>
-      The home page to form will be list of all the form filled accessible to
-      the admin
-    </h1>
+    <h1>Submitted Form List</h1>
     <a-button @click="downloadCSV()">Download CSV</a-button>
     <a-table
       :columns="columns"
       :data-source="formList"
       :rowKey="(record) => record.id"
       :scroll="{ x: 1200 }"
+      v-show="formList.length > 0"
     >
       <span slot="formID" slot-scope="text, record, index">{{
         index + 1
@@ -29,7 +27,7 @@
       <a
         slot="vendorName"
         slot-scope="text, record"
-        v-show="record.vendorID"
+        v-show="record.vendorID && record.vendorID !== null"
         :href="'/vendor/' + record.vendorID.id"
         >{{ record.vendorID.vendorName || 'Deleted' }}</a
       >
@@ -107,7 +105,6 @@ export default {
         this.$message.error('Could not load form data.')
       } else {
         this.formList = [...result.data]
-        console.log(this.formList)
       }
     },
   },

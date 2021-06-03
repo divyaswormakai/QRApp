@@ -1,17 +1,8 @@
 <template>
   <div>
-    <h1>
-      This will be where individual form will be visible. Visible to vendor and
-      admin
-    </h1>
+    <h1>Venue Details:</h1>
     <div v-if="vendorLoaded">
       <a-row>
-        <!--              <qrcode-vue-->
-        <!--                :value="vendorFormURL"-->
-        <!--                size="300"-->
-        <!--                class="vendor-qrcode"-->
-        <!--                id="vendor-qrcode"-->
-        <!--              ></qrcode-vue>-->
         <a-button type="primary">
           <nuxt-link :to="getQrcodeURL" target="_blank"
             >Print your QR Code here</nuxt-link
@@ -59,18 +50,13 @@ import QrcodeVue from 'qrcode.vue'
 export default {
   name: 'VendorIndividualComponent',
   components: { QrcodeVue },
-  beforeCreate() {
-    console.log('Before create')
-  },
+
   mounted() {
-    console.log('AAAAAA')
     const vendorID = window.location.pathname.split('/')[2]
     this.vendorID = vendorID
-    console.log('bbbb')
 
     this.vendorFormURL = `${window.location.origin}/form/new/${vendorID}`
     this.getVendorDetails(vendorID)
-    console.log('ccccc')
   },
   computed: {
     getQrcodeURL() {
@@ -90,11 +76,10 @@ export default {
   },
   methods: {
     async getVendorDetails(vendorID) {
-      console.log('VENDORRRR', vendorID)
       const result = await this.$axios.post('vendor/' + vendorID)
       if (result.data.vendorName) {
-        this.vendorLoaded = true
         this.vendorDetails = result.data
+        this.vendorLoaded = true
       } else {
         this.$message.error('Could not fetch vendor data')
       }

@@ -162,7 +162,7 @@ button.ant-switch::after {
 .ant-input {
   padding: 200px 100px;
   border-radius: 15px;
-  min-width: 400px;
+  min-width: 80%;
   min-height: 50px;
   margin: 1% 0px;
 }

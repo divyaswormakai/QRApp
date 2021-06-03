@@ -48,7 +48,6 @@ router.post('/vendor/add', async (req, res) => {
 			vendorSecondaryContact,
 			vendorEmail,
 			password,
-			active,
 		} = req.body;
 
 		if (password.length < 4) {
@@ -66,7 +65,6 @@ router.post('/vendor/add', async (req, res) => {
 			vendorSecondaryContact,
 			vendorEmail,
 			password: passwordHashed,
-			active: active || true,
 		});
 
 		let savedVendor = await newVendor.save();
@@ -75,7 +73,10 @@ router.post('/vendor/add', async (req, res) => {
 		}
 		return res.status(200).json(savedVendor.toJSON());
 	} catch (err) {
-		return res.status(400).json({ error: 'Could not add new vendor data.' });
+		console.log(err);
+		return res
+			.status(400)
+			.json({ error: err.message || 'Could not add new vendor data.' });
 	}
 });
 

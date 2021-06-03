@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Vendors: Only for admin</h1>
+    <h1>Vendors List</h1>
     <!--    Add a vendor     -->
     <a-button type="primary" @click="showAddFormModal">
       Add a new vendor
@@ -108,15 +108,15 @@
         <a-button type="primary" @click="EditVendorAction(record)"
           >Edit</a-button
         >
-        <a-divider type="vertical" />
-        <a-popconfirm
-          title="Are you sure?"
-          ok-text="Yes"
-          cancel-text="No"
-          @confirm="deleteVendor(record)"
-        >
-          <a-button type="danger">Delete</a-button>
-        </a-popconfirm>
+        <!--        <a-divider type="vertical" />-->
+        <!--        <a-popconfirm-->
+        <!--          title="Are you sure?"-->
+        <!--          ok-text="Yes"-->
+        <!--          cancel-text="No"-->
+        <!--          @confirm="deleteVendor(record)"-->
+        <!--        >-->
+        <!--          <a-button type="danger">Delete</a-button>-->
+        <!--        </a-popconfirm>-->
       </span>
     </a-table>
 
@@ -290,15 +290,15 @@ export default {
       }
       this.vendorList = vendors?.data
     },
-    async deleteVendor(record) {
-      const result = await this.$axios.delete(`admin/vendor/${record?.id}`)
-      if (result?.status === 200) {
-        this.$message.success('Successfully deleted' + record?.vendorName)
-        this.vendorList = this.vendorList.filter(
-          (vendor) => vendor.id !== record.id
-        )
-      }
-    },
+    // async deleteVendor(record) {
+    //   const result = await this.$axios.delete(`admin/vendor/${record?.id}`)
+    //   if (result?.status === 200) {
+    //     this.$message.success('Successfully deleted' + record?.vendorName)
+    //     this.vendorList = this.vendorList.filter(
+    //       (vendor) => vendor.id !== record.id
+    //     )
+    //   }
+    // },
     showAddFormModal() {
       this.visibleAddForm = true
     },

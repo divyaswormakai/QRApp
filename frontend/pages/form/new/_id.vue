@@ -1,29 +1,41 @@
 <template>
   <div>
     <h2>Please fill in the form below:</h2>
+
     <div v-show="formSubmitted">
-      <h4>
+      <h3>
         Your form has been submitted. You will receive a copy of the form that
-        you have submitted in the given email address
-      </h4>
-      <i>You can close this window.</i>
+        you have submitted in the given email address.
+      </h3>
+      <a @click="closeWindow()"><i>You can close this window.</i></a>
     </div>
     <a-form
       :form="form"
       @submit="handleNewFormAddition"
       v-show="!formSubmitted"
     >
-      <p>
+      <p style="background: #9f9f9f">
         <b> Data Protection Notice:</b> Your personal data is being collected on
-        this form in order to help prevent the spread of COVID-19 in our
-        barbershops and to protect our staff. Your personal data is being
-        processed in accordance with Article 9(2)(i) of the General Data
-        Protection Regulation, and Section 53 of the Data Protection Act 2018.
-        The information you provide on this form will not be used for any other
+        this form in order to help prevent the spread of COVID-19 in
+        <b
+          ><i>"{{ vendorName }}"</i></b
+        >
+        and to protect our staff. Your personal data is being processed in
+        accordance with Article 9(2)(i) of the General Data Protection
+        Regulation, and Section 53 of the Data Protection Act 2018. The
+        information you provide on this form will not be used for any other
         purpose, and will be strictly confidential. The form will be accessible
         only to administrator of e-society and the vendor for whom you have
-        filled the form. Your data will be retained for 12 weeks.
+        filled the form. Your data will be retained for 12 weeks. <br />
+        <b>Powered by:</b><br />
+        <a href="https://e-society.ie"
+          ><img
+            src="~assets/esociety-logo.svg"
+            alt="E-society logo"
+            width="150"
+        /></a>
       </p>
+
       <a-form-item label="Vendor">
         <a-input v-model="vendorName" disabled />
       </a-form-item>
@@ -171,7 +183,7 @@
           :auto-size="{ minRows: 2, maxRows: 10 }"
         />
       </a-form-item>
-      <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
+      <a-form-item>
         <a-button type="primary" html-type="submit"> Submit </a-button>
       </a-form-item>
     </a-form>
@@ -223,6 +235,9 @@ export default {
           this.formSubmitted = true
         }
       })
+    },
+    closeWindow() {
+      window.close()
     },
   },
 }

@@ -12,8 +12,7 @@
       <a :href="vendorFormURL" target="_blank">{{ vendorFormURL }}</a>
       <h4>Powered by:</h4>
       <img src="~assets/esociety-logo.svg" alt="E-society logo" width="100" />
-
-      <h2>sadfasdf</h2>
+      <br />
     </div>
 
     <a-button type="primary" @click="downloadPNGQR" id="png-btn"

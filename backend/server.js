@@ -72,7 +72,6 @@ const port = process.env.PORT || 3001;
 
 // Init the express.js server
 app.listen(port, () => console.log(`Server running on ${port}`));
-
 // Schedule cron job
 cron.schedule('30 23  * * *', () => {
 	// SEND MAIL TO ALL ACTIVE VENDORS WITH LIST OF FORMS THAT THEY HAVE BEEN SUBMITTED

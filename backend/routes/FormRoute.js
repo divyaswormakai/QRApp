@@ -41,6 +41,8 @@ router.post('/add', async (req, res) => {
 			comments,
 		});
 
+		console.log(newForm);
+
 		let savedForm = await newForm.save();
 		if (!savedForm) {
 			res.status(400).json({ error: 'Could not save form data.' });
@@ -52,7 +54,9 @@ router.post('/add', async (req, res) => {
 		res.status(200).json(savedForm.toJSON());
 	} catch (err) {
 		console.log(err);
-		res.status(400).json({ error: 'Could not add new form data.' });
+		res
+			.status(400)
+			.json({ error: err.message || 'Could not add new form data.' });
 	}
 });
 

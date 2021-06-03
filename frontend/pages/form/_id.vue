@@ -1,9 +1,6 @@
 <template>
   <div>
-    <h1>
-      This will be where individual form will be visible. Visible to vendor and
-      admin
-    </h1>
+    <h1>Form Details:</h1>
     <table v-show="formLoaded">
       <tbody>
         <tr>
@@ -67,7 +64,6 @@
 export default {
   name: 'FormIndividualComponent',
   middleware: ['vendorAuth'],
-
   mounted() {
     const formID = window.location.pathname.split('/')[2]
     this.getFormDetails(formID)
@@ -78,7 +74,6 @@ export default {
       formLoaded: false,
     }
   },
-
   computed: {
     getVisitDate() {
       return this.formDetails.dateOfVisit.slice(0, 10)

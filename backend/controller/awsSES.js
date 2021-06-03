@@ -19,7 +19,7 @@ exports.emailViaAWS_SES = function async(savedForm) {
 	const ses = new AWS.SES({ apiVersion: '2010-12-01' });
 	const params = {
 		Destination: {
-			ToAddresses: ['makaidivya@gmail.com'], // Email address/addresses that you want to send your email
+			ToAddresses: [savedForm.email], // Email address/addresses that you want to send your email
 		},
 		Message: {
 			Body: {
@@ -28,7 +28,12 @@ exports.emailViaAWS_SES = function async(savedForm) {
 					Charset: 'UTF-8',
 					Data: `<html>
 								<body>
-									<h1>Dear ${savedForm.fullName},</h1>
+									<h3>Dear ${savedForm.fullName},</h3>
+									<p>
+									<b>Data Protection Notice:</b> Your personal data is being collected on this form in order to help prevent the spread of COVID-19 in <b><i>"${
+										savedForm.vendorID.vendorName
+									}"</i></b> and to protect our staff. Your personal data is being processed in accordance with Article 9(2)(i) of the General Data Protection Regulation, and Section 53 of the Data Protection Act 2018. The information you provide on this form will not be used for any other purpose, and will be strictly confidential. The form will be accessible only to administrator of e-society and the vendor for whom you have filled the form. Your data will be retained for 12 weeks.
+									</p>
 									<p>Thank you for filling out the contact tracing form for ${
 										savedForm.vendorID.vendorName
 									}. The following table shows the information that was collected.</p>
@@ -40,10 +45,6 @@ exports.emailViaAWS_SES = function async(savedForm) {
 										<tr>
 											<td><b>Email</b></td>
 											<td>${savedForm.email}</td>
-										</tr>
-										<tr>
-											<td><b>Vendor Visited</b></td>
-											<td>${savedForm.vendorID.vendorName}</td>
 										</tr>
 										<tr>
 											<td><b>Date Of Visit</b></td>
@@ -79,9 +80,13 @@ exports.emailViaAWS_SES = function async(savedForm) {
 										</tr>
 									</table>
 									<br/>
-									<i>If you have any queries, please feel free to contact us.</i>
+									<i>If you have any queries, please feel free to contact the venue.</i>
 									<br/>
 									<p>Thank you.</p>
+									<div style="background:#e7e9eb;">
+										<b>Powered by:</b><br/>
+										<a href="https://e-society.ie"><b>E-Society.ie</b></a>
+									</div>
 								</body>
 							</html>`,
 				},
@@ -126,12 +131,22 @@ exports.vendorEmailAWS_SES = async () => {
 
 	const ses = new AWS.SES({ apiVersion: '2010-12-01' });
 	const now = new Date();
-	const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-	const todayString = `${today.getFullYear()}/${today.getMonth()}/${today.getDate()}`;
+	const yesterday = new Date();
+	yesterday.setDate(now.getDate() - 1);
+	// Yesterday to get data from yesterday
+	const today = new Date(
+		yesterday.getFullYear(),
+		yesterday.getMonth(),
+		yesterday.getDate()
+	);
+	const todayString = `${today.getFullYear()}/${
+		today.getMonth() + 1
+	}/${now.getDate()}`;
 
-	const forms = await Form.find({ dateOfVisit: { $lt: today } }).populate(
+	const forms = await Form.find({ dateOfVisit: { $gt: today } }).populate(
 		'vendorID'
 	);
+
 	const vendors = await Vendor.find({ active: true }).select([
 		'vendorName',
 		'vendorEmail',
@@ -143,7 +158,6 @@ exports.vendorEmailAWS_SES = async () => {
 			body: '',
 		};
 	});
-	console.log(emailBodyForVendors);
 	const activeVendorList = Object.keys(emailBodyForVendors);
 
 	forms.forEach((form) => {
@@ -228,8 +242,6 @@ exports.vendorEmailAWS_SES = async () => {
 				</footer>
 				</html>
 			`;
-			console.log(emailBodyForVendors[vendorName]);
-
 			const params = {
 				Destination: {
 					ToAddresses: [emailBodyForVendors[vendorName].email],
