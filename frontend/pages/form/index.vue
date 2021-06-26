@@ -12,12 +12,7 @@
       <span slot="formID" slot-scope="text, record, index">{{
         index + 1
       }}</span>
-      <a
-        slot="fullName"
-        slot-scope="text, record"
-        :href="'/form/' + record.id"
-        >{{ text }}</a
-      >
+      <p slot="fullName" slot-scope="text, record">{{ text }}</p>
       <span slot="dateOfVisit" slot-scope="text, record">
         {{ text.split('T')[0] }}
       </span>
@@ -78,7 +73,7 @@ export default {
             item.fullName,
             item.phoneNumber,
             item.email,
-            item.vendorID?.vendorName,
+            item.vendorID?.vendorName || '',
             item.dateOfVisit.slice(0, 10),
             item.timeOfVisit,
             item.temperature ? 'Yes' : 'No',

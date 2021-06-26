@@ -8,8 +8,8 @@
           <td>{{ formDetails.fullName }}</td>
         </tr>
         <tr>
-          <td class="table-bold">Vendor visisted</td>
-          <td>{{ formDetails.vendorID.vendorName }}</td>
+          <td class="table-bold">Vendor visited</td>
+          <td>{{ formDetails.vendorName }}</td>
         </tr>
         <tr>
           <td class="table-bold">Email</td>
@@ -21,7 +21,7 @@
         </tr>
         <tr>
           <td class="table-bold">Date Of Visit</td>
-          <td>{{ getVisitDate }}</td>
+          <td>{{ formDetails.dateOfVisit }}</td>
         </tr>
         <tr>
           <td class="table-bold">Time of Visit</td>
@@ -74,16 +74,15 @@ export default {
       formLoaded: false,
     }
   },
-  computed: {
-    getVisitDate() {
-      return this.formDetails.dateOfVisit.slice(0, 10)
-    },
-  },
+
   methods: {
     async getFormDetails(formID) {
       const result = await this.$axios.post('form/' + formID)
       if (result.data.fullName) {
-        this.formDetails = result.data
+        this.formDetails = { ...result.data }
+        this.formDetails.vendorName = result.data?.vendorID?.vendorName || ''
+        this.formDetails.dateOfVisit =
+          result.data?.dateOfVisit?.slice(0, 10) || ''
         this.formLoaded = true
       } else {
         this.$message.error('Could not load form data. Try again!!!')
