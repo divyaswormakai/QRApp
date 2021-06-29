@@ -1,45 +1,6 @@
 <template>
   <div>
     <div class="qr-container" id="qr-container">
-      <div
-        style="
-          position: absolute;
-          right: 0;
-          top: 35%;
-          transform: translateY(-50%);
-        "
-      >
-        <div
-          style="
-            background-color: #f6b618;
-            color: white;
-            margin-bottom: 10px;
-            right: 0;
-            width: 150px;
-            position: absolute;
-            top: -50px;
-            right: 0;
-            border-radius: 3px;
-          "
-        >
-          <span style="font-size: 2rem; font-weight: 600"> &euro;1 | </span>
-          <span style="font-size: 1.5rem">1 Day</span>
-        </div>
-        <div
-          style="
-            background-color: #f6b618;
-            color: white;
-            width: 225px;
-            position: absolute;
-            top: 10px;
-            right: 0;
-            border-radius: 3px;
-          "
-        >
-          <span style="font-size: 2rem; font-weight: 600"> &euro;90 | </span>
-          <span style="font-size: 1.5rem">3 Months</span>
-        </div>
-      </div>
       <img
         src="~assets/esociety_logo_qr.svg"
         alt="E-society logo"
@@ -64,81 +25,101 @@
           font-weight: bold;
         "
       >
-        Keeping Staff & Customers Safe With Zero Hassle And No More Delays.
+        Keeping Staff & Customers Safe.
       </div>
 
       <div
         style="
           background-color: #f6b618;
-          margin-top: 150px;
+          margin-top: 225px;
           display: flex;
           flex-direction: column;
           align-items: center;
+          height: 100%;
+          max-width: 80vw;
+          min-width: 50vw;
         "
       >
         <!--        BORDER IN CANVAS-->
         <div
           style="
-            width: 270px;
-            height: 260px;
-            margin-top: -100px;
+            width: 320px;
+            height: 310px;
+            margin-top: -150px;
             background-color: white;
           "
         >
           <qrcode-vue
             v-show="vendorFormURL.length > 0"
             :value="vendorFormURL"
-            size="250"
+            size="300"
             class="vendor-qrcode"
             id="vendor-qrcode"
           ></qrcode-vue>
         </div>
 
-        <p style="font-weight: bold; font-size: 0.75rem">
-          Scan This Code To View The Sample Form
-        </p>
         <p
           style="
-            padding: 0 18%;
-            font-size: 16px;
-            font-weight: 600;
-            margin-top: 50px;
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-transform: capitalize;
           "
         >
-          Introducing a system to save you time to increase your sales. Print &
-          Place on Tables, Menus, Entrances & More. Customer recieves an
-          immediate confirmation email. Staff can easily check with a distant
-          glance. If it is a
-          <span style="color: red; font-weight: bold">RED</span>, they submitted
-          YES to a Question , if it is
-          <span style="color: white; font-weight: bold">WHITE</span> they said
-          NO.
+          Scan the QR Code and please fill the form
         </p>
-        <p style="color: white; font-size: 16px; font-weight: 600">
-          No queues at doors to check in.<br />
-          Staff and Customer Safety Made Simple.<br />Instant & Automated -No
-          More Pens, Pads and ClipBoards.
-        </p>
+
         <div style="font-weight: 900; font-size: 1.25rem">
           <span style="text-decoration: line-through">&nbsp;&nbsp;&nbsp;</span>
           GDPR COMPLIANT
           <span style="text-decoration: line-through">&nbsp;&nbsp;&nbsp;</span>
         </div>
+        <div style="width: 80%">
+          <h3 style="font-size: 2rem; color: white">Instructions:</h3>
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
+              color: white;
+            "
+          >
+            <div style="width: 49%">
+              <h3>For iOS</h3>
+              <p
+                style="
+                  font-weight: bold;
+                  font-size: 1.75rem;
+                  text-transform: capitalize;
+                "
+              >
+                Open your camera
+              </p>
+            </div>
+            <div style="width: 2px; background-color: white"></div>
+            <div style="width: 49%">
+              <h3>For Android</h3>
+              <p style="font-weight: bold; font-size: 1.5rem">
+                Open your QR Scanner
+              </p>
+            </div>
+          </div>
+        </div>
         <div
           style="
             display: flex;
             flex-direction: row;
-            width: 40vw;
+            width: 70%;
             margin: 20px 0;
-            justify-content: space-between;
+            justify-content: center;
             background-color: white;
             padding: 5px 25px;
             border-radius: 25px;
           "
         >
-          <div style="font-weight: bolder">ESOC-LIVE LTD</div>
-          <div style="font-weight: bolder">oisin@e-society.ie</div>
-          <div style="font-weight: bolder">0873323843</div>
+          <div style="font-weight: bolder">
+            Complete the health check. It takes less than a minute. For all of
+            our safety.
+          </div>
         </div>
       </div>
       <br />
@@ -152,6 +133,9 @@
 </template>
 
 <script>
+// Big text for scan your code
+// Safety word
+// It's here for all our safety.
 import QrcodeVue from 'qrcode.vue'
 import * as htmlToImage from 'html-to-image'
 
