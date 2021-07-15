@@ -15,6 +15,11 @@
       <img src="~assets/esociety-logo.svg" alt="E-society logo" width="100" />
     </div>
 
+
+    <a-button type="primary" @click="downloadPNGQR" id="png-btn"
+    >Save PNG</a-button
+    >
+
     <h3>Indoor Contact Tracing Form</h3>
     <div class="qr-container" id="qr-container-indoor">
       <h4>Please scan this QR code for Indoor Contact Tracing Form</h4>
@@ -30,8 +35,8 @@
       <img src="~assets/esociety-logo.svg" alt="E-society logo" width="100" />
     </div>
 
-    <a-button type="primary" @click="downloadPNGQR" id="png-btn"
-      >Save PNG</a-button
+    <a-button type="primary" @click="downloadPNGQRIndoor" id="png-btn-indoor"
+      >Save indoor QR PNG</a-button
     >
     <div id="img-out"></div>
   </div>
@@ -68,8 +73,18 @@ export default {
       htmlToImage
         .toJpeg(document.getElementById('qr-container'), { quality: 0.95 })
         .then(function (dataUrl) {
-          var link = document.createElement('a')
-          link.download = 'my-image-name.jpeg'
+          const link = document.createElement('a')
+          link.download = 'my-image-name.jpg'
+          link.href = dataUrl
+          link.click()
+        })
+    },
+    downloadPNGQRIndoor() {
+      htmlToImage
+        .toJpeg(document.getElementById('qr-container-indoor'), { quality: 0.95 })
+        .then(function (dataUrl) {
+          const link = document.createElement('a')
+          link.download = 'indoor-qr.jpg'
           link.href = dataUrl
           link.click()
         })

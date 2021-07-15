@@ -20,12 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9fa6a4bb-d9f6-47de-b1d3-7be028f1746d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/pages/form/indoor/_id.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/nuxt.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/nuxt.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/form/new/_id.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/form/new/_id.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/form/indoor/_id.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/form/indoor/_id.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/vendor/qrcode.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/vendor/qrcode.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +65,8 @@
       <option name="presentableId" value="Default" />
       <updated>1626162487250</updated>
       <workItem from="1626162489647" duration="916000" />
-      <workItem from="1626329896730" duration="5788000" />
+      <workItem from="1626329896730" duration="5896000" />
+      <workItem from="1626351487789" duration="1341000" />
     </task>
     <servers />
   </component>
@@ -85,6 +83,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="2056" y="372" key="#Prettier" timestamp="1626163390548">

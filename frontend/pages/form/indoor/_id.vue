@@ -15,18 +15,11 @@
       v-show="!formSubmitted"
     >
       <p style="background: #9f9f9f">
-        <b> Data Protection Notice:</b> Your personal data is being collected on
-        this form in order to help prevent the spread of COVID-19 in
+        <b> Data Protection Notice:</b> Your personal data is being collected on this form in order to help prevent the spread of COVID-19 in
         <b
         ><i>"{{ vendorName }}"</i></b
         >
-        and to protect our staff. Your personal data is being processed in
-        accordance with Article 9(2)(i) of the General Data Protection
-        Regulation, and Section 53 of the Data Protection Act 2018. The
-        information you provide on this form will not be used for any other
-        purpose, and will be strictly confidential. The form will be accessible
-        only to administrator of e-society and the vendor for whom you have
-        filled the form. Your data will be retained for 12 weeks. <br />
+        and to protect our staff and our customers. Your personal data is being processed in accordance with Article 9(2)(i) of the General Data Protection Regulation, and Section 53 of the Data Protection Act 2018. The information you provide on this form will not be used for any other purpose, and will be strictly confidential. The form will be accessible only to the vendor for whom you have filled the form. E-Society will not retain any of your information once you hit submit.  <br />
         <b>Powered by:</b><br />
         <a href="https://e-society.ie"
         ><img
@@ -91,17 +84,18 @@
         />
       </a-form-item>
 
-      <a-form-item label="Upload one of the following:\nEU Vaccination Cert/ Immunisitaion Proof/ Covid 19 Negative Test or Foreign Equivalent" >
+      <a-form-item label="Upload One of the following:
+
+EU Vaccination Cert/ or Foreign Equivalent/ or Immunization Proof" >
         <a-upload :file-list="fileList" :remove="handleRemove" :before-upload="beforeUpload" :multiple="false">
           <a-button> <a-icon type="upload" /> Select File </a-button>
         </a-upload>
       </a-form-item>
 
       <a-checkbox v-model="isCheckBoxTrue">
-        Tick this box to confirm the information provided is representing you and that all images/files uploaded are to the best of your knowledge verification of your legal capability to enter the premises within the present Health Acts and Emergency measures.
-      </a-checkbox>
+        Tick this box to confirm the information provided is authentic and that all images/files uploaded are verification of your legal capability to enter the premises for indoor dining within the present Health Acts & Emergency measures.      </a-checkbox>
       <a-form-item>
-        <a-button type="primary" html-type="submit" :disabled="!isCheckBoxTrue"> Submit </a-button>
+        <a-button type="primary" html-type="submit" :disabled="!isCheckBoxTrue || isClicked"> Submit </a-button>
       </a-form-item>
     </a-form>
   </div>
@@ -124,6 +118,7 @@ export default {
       agreed: false,
       fileList:[],
       isCheckBoxTrue: false,
+      isClicked: false,
     }
   },
 
@@ -139,19 +134,17 @@ export default {
       }
     },
     async handleNewFormAddition(e) {
+      this.isClicked = true;
       e.preventDefault()
       await this.form.validateFields(async (err) => {
         if (err) {
           this.$message.error('Could not submit form. Please try again.')
+          this.isClicked = false;
+
           return
         }
-        let postBody = {
-          ...this.form.getFieldsValue(),
-          vendorID: this.vendorID,
-        }
+
         const formValues = this.form.getFieldsValue();
-        console.log(this.form.getFieldsValue())
-        console.log(this.fileList)
         const formData = new FormData();
         formData.append("vendorID",this.vendorID);
         formData.append("email",formValues.email);
@@ -161,14 +154,15 @@ export default {
         formData.append("image",
          this.fileList[0]
         )
-        console.log("BEFORE RESULT")
         const result = await this.$axios.post('form/indoor/add', formData)
-        console.log("RESULTT")
-        console.log(result)
         if (result.data.message==='Successful.' || result.status===200) {
           this.$message.success('Your form has been received successfully.')
           this.formSubmitted = true
+          this.isClicked = false;
+
         }
+
+
       })
     },
     handleRemove(file) {
