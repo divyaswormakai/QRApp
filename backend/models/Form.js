@@ -47,6 +47,14 @@ const FormSchema = new Schema({
 	noOfPeopleInGroup: {
 		type: Number,
 	},
+	vaccinationStatus: {
+		type: Boolean,
+		required: true,
+	},
+	covidOver9Months: {
+		type: Boolean,
+		default: false,
+	},
 	comments: {
 		type: String,
 	},

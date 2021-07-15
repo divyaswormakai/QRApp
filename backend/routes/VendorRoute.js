@@ -12,7 +12,7 @@ router.post('/:id', async (req, res) => {
 		if (!vendor) {
 			res
 				.status(400)
-				.json({ error: 'Could not save vendor data for id:' + id });
+				.json({ error: 'Could not find vendor data for id:' + id });
 		}
 
 		res.status(200).json(vendor.toJSON());

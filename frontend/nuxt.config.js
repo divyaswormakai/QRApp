@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Scan Me',
+    title: 'Contact Form',
     htmlAttrs: {
       lang: 'en',
     },
@@ -12,6 +12,11 @@ export default {
         hid: 'description',
         name: 'description',
         content: 'COVID Contact Tracing form',
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Powered by E-Society',
       },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],

@@ -174,6 +174,34 @@
       <a-form-item label="How many people were there in your table/group?">
         <a-input-number v-decorator="['noOfPeopleInGroup']" />
       </a-form-item>
+      <a-form-item label="Are you vaccinated? ">
+        <a-radio-group
+          v-decorator="[
+            'vaccinationStatus',
+            {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please state your vaccination status!',
+                },
+              ],
+            },
+          ]"
+          button-style="solid"
+        >
+          <a-radio-button :value="true"> Yes </a-radio-button>
+          <a-radio-button :value="false"> No </a-radio-button>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item
+        label="Have contracted COVID-19 over the past 9 months? "
+        v-show="form.getFieldValue('vaccinationStatus')"
+      >
+        <a-radio-group v-decorator="['covidOver9Months']" button-style="solid">
+          <a-radio-button :value="true"> Yes </a-radio-button>
+          <a-radio-button :value="false"> No </a-radio-button>
+        </a-radio-group>
+      </a-form-item>
       <a-form-item
         label="Have you been in contact with a confirmed positive Covid-19 case in the past 14 days? "
       >

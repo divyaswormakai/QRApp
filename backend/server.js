@@ -42,6 +42,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 // Apply the routes
 
+app.use('/api/uploads', express.static(path.join(`${__dirname}/uploads`)));
 app.use('/api/form', FormRoute);
 app.use('/api/login', LoginRoute);
 app.use('/api/vendor', VendorRoute);

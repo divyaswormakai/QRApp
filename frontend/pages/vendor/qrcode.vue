@@ -1,128 +1,33 @@
 <template>
   <div>
+    <h3>Normal Contact Tracing Form</h3>
     <div class="qr-container" id="qr-container">
-      <img
-        src="~assets/esociety_logo_qr.svg"
-        alt="E-society logo"
-        width="100"
-        style="margin-bottom: 25px"
-      />
-      <p style="color: #f6b618; font-size: 4rem; margin: 0; line-height: 4rem">
-        TRACK & TRACE
-      </p>
-      <p
-        style="color: black; font-size: 4.5rem; margin: 0; line-height: 4.5rem"
-      >
-        <b>USING QR CODE</b>
-      </p>
-      <div
-        style="
-          background-color: #f6b618;
-          color: white;
-          margin: 2vh 0px;
-          padding: 5px 50px;
-          border-radius: 25px;
-          font-weight: bold;
-        "
-      >
-        Keeping Staff & Customers Safe.
-      </div>
+      <h4>Please scan this QR code for Contact Tracing Form</h4>
+      <qrcode-vue
+        v-show="vendorFormURL.length > 0"
+        :value="vendorFormURL"
+        size="400"
+        class="vendor-qrcode"
+        id="vendor-qrcode"
+      ></qrcode-vue>
+      <a :href="vendorFormURL" target="_blank">{{ vendorFormURL }}</a>
+      <h4>Powered by:</h4>
+      <img src="~assets/esociety-logo.svg" alt="E-society logo" width="100" />
+    </div>
 
-      <div
-        style="
-          background-color: #f6b618;
-          margin-top: 225px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          height: 100%;
-          max-width: 80vw;
-          min-width: 50vw;
-        "
-      >
-        <!--        BORDER IN CANVAS-->
-        <div
-          style="
-            width: 320px;
-            height: 310px;
-            margin-top: -150px;
-            background-color: white;
-          "
-        >
-          <qrcode-vue
-            v-show="vendorFormURL.length > 0"
-            :value="vendorFormURL"
-            size="300"
-            class="vendor-qrcode"
-            id="vendor-qrcode"
-          ></qrcode-vue>
-        </div>
-
-        <p
-          style="
-            font-weight: bold;
-            font-size: 1.5rem;
-            text-transform: capitalize;
-          "
-        >
-          Scan the QR Code and please fill the form
-        </p>
-
-        <div style="font-weight: 900; font-size: 1.25rem">
-          <span style="text-decoration: line-through">&nbsp;&nbsp;&nbsp;</span>
-          GDPR COMPLIANT
-          <span style="text-decoration: line-through">&nbsp;&nbsp;&nbsp;</span>
-        </div>
-        <div style="width: 80%">
-          <h3 style="font-size: 2rem; color: white">Instructions:</h3>
-          <div
-            style="
-              display: flex;
-              flex-direction: row;
-              justify-content: center;
-              color: white;
-            "
-          >
-            <div style="width: 49%">
-              <h3>For iOS</h3>
-              <p
-                style="
-                  font-weight: bold;
-                  font-size: 1.75rem;
-                  text-transform: capitalize;
-                "
-              >
-                Open your camera
-              </p>
-            </div>
-            <div style="width: 2px; background-color: white"></div>
-            <div style="width: 49%">
-              <h3>For Android</h3>
-              <p style="font-weight: bold; font-size: 1.5rem">
-                Open your QR Scanner
-              </p>
-            </div>
-          </div>
-        </div>
-        <div
-          style="
-            display: flex;
-            flex-direction: row;
-            width: 70%;
-            margin: 20px 0;
-            justify-content: center;
-            background-color: white;
-            padding: 5px 25px;
-            border-radius: 25px;
-          "
-        >
-          <div style="font-weight: bolder">
-            Complete the health check. It takes less than a minute. For all of
-            our safety.
-          </div>
-        </div>
-      </div>
-      <br />
+    <h3>Indoor Contact Tracing Form</h3>
+    <div class="qr-container" id="qr-container-indoor">
+      <h4>Please scan this QR code for Indoor Contact Tracing Form</h4>
+      <qrcode-vue
+        v-show="vendorIndoorFormURL.length > 0"
+        :value="vendorIndoorFormURL"
+        size="400"
+        class="vendor-qrcode"
+        id="vendor-qrcode-indoor"
+      ></qrcode-vue>
+      <a :href="vendorIndoorFormURL" target="_blank">{{ vendorIndoorFormURL }}</a>
+      <h4>Powered by:</h4>
+      <img src="~assets/esociety-logo.svg" alt="E-society logo" width="100" />
     </div>
 
     <a-button type="primary" @click="downloadPNGQR" id="png-btn"
@@ -149,10 +54,13 @@ export default {
       this.$router.push('/vendor')
     }
     this.vendorFormURL = this.$route.query.url
+    this.vendorIndoorFormURL = this.$route.query.url.replace('new','indoor')
+    console.log(this.$route.query.url.replace('new','indoor'))
   },
   data() {
     return {
       vendorFormURL: '',
+      vendorIndoorFormURL:''
     }
   },
   methods: {
@@ -176,11 +84,9 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: white;
+  background: slategray;
   padding: 5px;
   margin-bottom: 10px;
-  position: relative;
-  width: 60vw;
 }
 a {
   color: white;
