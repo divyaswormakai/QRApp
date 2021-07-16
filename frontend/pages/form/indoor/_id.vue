@@ -84,11 +84,15 @@
         />
       </a-form-item>
 
-      <a-form-item label="Upload One of the following:
-
-EU Vaccination Cert/ or Foreign Equivalent/ or Immunization Proof" >
+      <a-form-item label="Upload One of the following: EU Vaccination Cert/ or Foreign Equivalent/ or Immunization Proof" >
         <a-upload :file-list="fileList" :remove="handleRemove" :before-upload="beforeUpload" :multiple="false">
           <a-button> <a-icon type="upload" /> Select File </a-button>
+        </a-upload>
+      </a-form-item>
+
+      <a-form-item label="Upload your identification" >
+        <a-upload :file-list="identityFileList" :remove="handleRemoveIdentity" :before-upload="beforeUploadIdentity" :multiple="false">
+          <a-button> <a-icon type="upload" /> Select Identification File </a-button>
         </a-upload>
       </a-form-item>
 
@@ -117,6 +121,7 @@ export default {
       formSubmitted: false,
       agreed: false,
       fileList:[],
+      identityFileList:[],
       isCheckBoxTrue: false,
       isClicked: false,
     }
@@ -134,36 +139,51 @@ export default {
       }
     },
     async handleNewFormAddition(e) {
-      this.isClicked = true;
-      e.preventDefault()
-      await this.form.validateFields(async (err) => {
-        if (err) {
-          this.$message.error('Could not submit form. Please try again.')
-          this.isClicked = false;
 
-          return
-        }
+        this.isClicked = true;
+        e.preventDefault()
+        setTimeout(()=>{
+          this.isClicked=false;
+        },10000)
+        await this.form.validateFields(async (err) => {
+          if (err) {
+            this.isClicked = false;
+            this.$message.error('Could not submit form. Please try again.')
+            return
+          }
 
-        const formValues = this.form.getFieldsValue();
-        const formData = new FormData();
-        formData.append("vendorID",this.vendorID);
-        formData.append("email",formValues.email);
-        formData.append("fullName", formValues.fullName)
-        formData.append("dateOfVisit", formValues.dateOfVisit)
-        formData.append("timeOfVisit", formValues.timeOfVisit.format('hh:mm A').toString())
-        formData.append("image",
-         this.fileList[0]
-        )
-        const result = await this.$axios.post('form/indoor/add', formData)
-        if (result.data.message==='Successful.' || result.status===200) {
-          this.$message.success('Your form has been received successfully.')
-          this.formSubmitted = true
-          this.isClicked = false;
+          try{
+            const formValues = this.form.getFieldsValue();
+            const formData = new FormData();
+            formData.append("vendorID",this.vendorID);
+            formData.append("email",formValues.email);
+            formData.append("fullName", formValues.fullName)
+            formData.append("dateOfVisit", formValues.dateOfVisit)
+            formData.append("timeOfVisit", formValues.timeOfVisit.format('hh:mm A').toString())
+            formData.append("image",
+              this.fileList[0]
+            )
+            formData.append('image2',this.identityFileList[0])
+            const result = await this.$axios.post('form/indoor/add', formData)
+            if(result.status!==200){
+              throw new Error(result.data.error)
+            }
+              this.$message.success('Your form has been received successfully.')
+              this.formSubmitted = true
+              this.isClicked = false;
 
-        }
+
+          }  catch(error){
+            console.log(error)
+            this.isClicked = false;
+          }
+
+        })
 
 
-      })
+
+
+
     },
     handleRemove(file) {
       const index = this.fileList.indexOf(file);
@@ -173,6 +193,16 @@ export default {
     },
     beforeUpload(file) {
       this.fileList = [ file];
+      return false;
+    },
+    handleRemoveIdentity(file) {
+      const index = this.identityFileList.indexOf(file);
+      const newFileList = this.identityFileList.slice();
+      newFileList.splice(index, 1);
+      this.identityFileList = newFileList;
+    },
+    beforeUploadIdentity(file) {
+      this.identityFileList = [  file];
       return false;
     },
     closeWindow() {

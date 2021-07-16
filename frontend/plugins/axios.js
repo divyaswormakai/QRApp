@@ -18,7 +18,7 @@ export default function ({ $axios, redirect, app }) {
   })
   $axios.onError((error) => {
     if (error.response.status === 400) {
-      message.error('Failed to load data. Try again later.')
+      message.error(error.response.data.error || 'Failed to load data. Try again later.')
     }
   })
   $axios.onResponseError((error) => {
