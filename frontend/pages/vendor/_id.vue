@@ -60,7 +60,7 @@ export default {
   },
   computed: {
     getQrcodeURL() {
-      return '/vendor/qrcode/?url=' + this.vendorFormURL
+      return '/vendor/qrcode/?url=' + this.vendorFormURL+'&vendorName='+this.vendorDetails.vendorName
     },
     vendorSubmittedFormURL() {
       return '/vendor/forms/' + this.vendorID

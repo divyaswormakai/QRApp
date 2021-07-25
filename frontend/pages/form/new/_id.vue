@@ -26,7 +26,9 @@
         information you provide on this form will not be used for any other
         purpose, and will be strictly confidential. The form will be accessible
         only to administrator of e-society and the vendor for whom you have
-        filled the form. Your data will be retained for 12 weeks. <br />
+        filled the form.<br />
+        The Health Act 1947 (Section 31A - Temporary Restrictions) (Covid-19) (No. 2) Regulations 2021 (SI 217 of 2021) provide that a specified person shall retain and make available records made under paragraph (2) for the purposes of inspection by a member of the Garda Síochána acting in the course of his or her duties under these Regulations, or by a person appointed by the Health Service Executive for the purposes of the programme commonly known as the Covid-19 Contact Management Programme, for a period of 28 days after the records have been made. Should a confirmed case arise, the Contact Management Programme will take the necessary action to contact those who need to be contacted.
+        <br/>
         <b>Powered by:</b><br />
         <a href="https://e-society.ie"
           ><img
@@ -105,112 +107,11 @@
           style="width: 100%"
         />
       </a-form-item>
-      <a-form-item label="Do you have temperature?">
-        <a-radio-group
-          v-decorator="[
-            'temperature',
-            {
-              rules: [
-                { required: true, message: 'Please input your time of visit!' },
-              ],
-            },
-          ]"
-          button-style="solid"
-        >
-          <a-radio-button :value="true"> Yes </a-radio-button>
-          <a-radio-button :value="false"> No </a-radio-button>
-        </a-radio-group>
-      </a-form-item>
-      <a-form-item label="Do you have cough?">
-        <a-radio-group
-          v-decorator="[
-            'cough',
-            {
-              rules: [
-                { required: true, message: 'Please input your time of visit!' },
-              ],
-            },
-          ]"
-          button-style="solid"
-        >
-          <a-radio-button :value="true"> Yes </a-radio-button>
-          <a-radio-button :value="false"> No </a-radio-button>
-        </a-radio-group>
-      </a-form-item>
-      <a-form-item label="Have you been abroad in the past 14 days? ">
-        <a-radio-group
-          v-decorator="[
-            'abroadIn14Days',
-            {
-              rules: [
-                { required: true, message: 'Please input your time of visit!' },
-              ],
-            },
-          ]"
-          button-style="solid"
-        >
-          <a-radio-button :value="true"> Yes </a-radio-button>
-          <a-radio-button :value="false"> No </a-radio-button>
-        </a-radio-group>
-      </a-form-item>
-      <a-form-item
-        label="Have you been in contact with a confirmed positive Covid-19 case in the past 14 days? "
-      >
-        <a-radio-group
-          v-decorator="[
-            'contactIn14Days',
-            {
-              rules: [
-                { required: true, message: 'Please input your time of visit!' },
-              ],
-            },
-          ]"
-          button-style="solid"
-        >
-          <a-radio-button :value="true"> Yes </a-radio-button>
-          <a-radio-button :value="false"> No </a-radio-button>
-        </a-radio-group>
-      </a-form-item>
+
       <a-form-item label="How many people were there in your table/group?">
         <a-input-number v-decorator="['noOfPeopleInGroup']" />
       </a-form-item>
-      <a-form-item label="Are you vaccinated? ">
-        <a-radio-group
-          v-decorator="[
-            'vaccinationStatus',
-            {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please state your vaccination status!',
-                },
-              ],
-            },
-          ]"
-          button-style="solid"
-        >
-          <a-radio-button :value="true"> Yes </a-radio-button>
-          <a-radio-button :value="false"> No </a-radio-button>
-        </a-radio-group>
-      </a-form-item>
-      <a-form-item
-        label="Have contracted COVID-19 over the past 9 months? "
-        v-show="form.getFieldValue('vaccinationStatus')"
-      >
-        <a-radio-group v-decorator="['covidOver9Months']" button-style="solid">
-          <a-radio-button :value="true"> Yes </a-radio-button>
-          <a-radio-button :value="false"> No </a-radio-button>
-        </a-radio-group>
-      </a-form-item>
-      <a-form-item
-        label="Have you been in contact with a confirmed positive Covid-19 case in the past 14 days? "
-      >
-        <a-textarea
-          v-decorator="['comments']"
-          placeholder="Any comments on the form, feel free to write it down here."
-          :auto-size="{ minRows: 2, maxRows: 10 }"
-        />
-      </a-form-item>
+
       <a-form-item>
         <a-button type="primary" html-type="submit"> Submit </a-button>
       </a-form-item>
@@ -259,7 +160,7 @@ export default {
         postBody.timeOfVisit = postBody.timeOfVisit.format('h:mm a').toString()
         const result = await this.$axios.post('form/add', postBody)
         if (result.data.vendorID) {
-          this.$message.success('Your form has been recieved successfully')
+          this.$message.success('Your form has been received successfully')
           this.formSubmitted = true
         }
       })

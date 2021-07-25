@@ -83,6 +83,14 @@
           style="width: 100%"
         />
       </a-form-item>
+      <a-form-item label="Table Number/Booking Reference/Confirmation Number">
+        <a-input
+          v-decorator="[
+            'refNo',
+
+          ]"
+        />
+      </a-form-item>
 
       <a-form-item label="Upload One of the following: EU Vaccination Cert/ or Foreign Equivalent/ or Immunization Proof" >
         <a-upload :file-list="fileList" :remove="handleRemove" :before-upload="beforeUpload" :multiple="false">
@@ -95,6 +103,8 @@
           <a-button> <a-icon type="upload" /> Select Identification File </a-button>
         </a-upload>
       </a-form-item>
+
+
 
       <a-checkbox v-model="isCheckBoxTrue">
         Tick this box to confirm the information provided is authentic and that all images/files uploaded are verification of your legal capability to enter the premises for indoor dining within the present Health Acts & Emergency measures.      </a-checkbox>
@@ -160,6 +170,7 @@ export default {
             formData.append("fullName", formValues.fullName)
             formData.append("dateOfVisit", formValues.dateOfVisit)
             formData.append("timeOfVisit", formValues.timeOfVisit.format('hh:mm A').toString())
+            formData.append("refNo", formValues.refNo || "")
             formData.append("image",
               this.fileList[0]
             )
