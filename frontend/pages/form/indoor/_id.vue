@@ -154,7 +154,7 @@ export default {
         e.preventDefault()
         setTimeout(()=>{
           this.isClicked=false;
-        },10000)
+        },30000)
         await this.form.validateFields(async (err) => {
           if (err) {
             this.isClicked = false;
@@ -174,7 +174,9 @@ export default {
             formData.append("image",
               this.fileList[0]
             )
-            formData.append('image2',this.identityFileList[0])
+            if(this.identityFileList.length>0) {
+              formData.append('image2', this.identityFileList[0])
+            }
             const result = await this.$axios.post('form/indoor/add', formData)
             if(result.status!==200){
               throw new Error(result.data.error)

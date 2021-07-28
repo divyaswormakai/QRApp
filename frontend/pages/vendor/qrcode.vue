@@ -119,6 +119,11 @@
       </div>
     </div>
 
+    <a-button type="primary" @click="downloadPNGQPoster" id="png-btn-poster"
+    >Save indoor QR PNG
+    </a-button
+    >
+
     <div id="img-out"></div>
   </div>
 </template>
@@ -168,6 +173,16 @@ export default {
         .then(function(dataUrl) {
           const link = document.createElement("a");
           link.download = "indoor-qr.jpg";
+          link.href = dataUrl;
+          link.click();
+        });
+    },
+    downloadPNGQPoster(){
+      htmlToImage
+        .toJpeg(document.getElementById("qr-container-poster"), { quality: 0.95 })
+        .then(function(dataUrl) {
+          const link = document.createElement("a");
+          link.download = "poster-qr.jpg";
           link.href = dataUrl;
           link.click();
         });
