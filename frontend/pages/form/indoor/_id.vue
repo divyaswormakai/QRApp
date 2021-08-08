@@ -51,6 +51,7 @@
               rules: [
                 { required: true, message: 'Please input your full name!' },
               ],
+
             },
           ]"
         />
@@ -63,6 +64,7 @@
               rules: [
                 { required: true, message: 'Please input your date of visit!' },
               ],
+              initialValue:currentTime
             },
           ]"
           style="width: 100%"
@@ -76,11 +78,13 @@
               rules: [
                 { required: true, message: 'Please input your time of visit!' },
               ],
+               initialValue: currentTime
             },
           ]"
           use12-hours
           format="hh:mm A"
           style="width: 100%"
+
         />
       </a-form-item>
       <a-form-item label="Table Number/Booking Reference/Confirmation Number">
@@ -116,6 +120,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   name: 'NewIndoorFormComponent',
   mounted() {
@@ -134,6 +139,7 @@ export default {
       identityFileList:[],
       isCheckBoxTrue: false,
       isClicked: false,
+      currentTime: moment()
     }
   },
 
@@ -168,7 +174,7 @@ export default {
             formData.append("vendorID",this.vendorID);
             formData.append("email",formValues.email);
             formData.append("fullName", formValues.fullName)
-            formData.append("dateOfVisit", formValues.dateOfVisit)
+            formData.append("dateOfVisit", formValues.dateOfVisit.format('YYYY-MM-DD').toString())
             formData.append("timeOfVisit", formValues.timeOfVisit.format('hh:mm A').toString())
             formData.append("refNo", formValues.refNo || "")
             formData.append("image",
@@ -177,6 +183,7 @@ export default {
             if(this.identityFileList.length>0) {
               formData.append('image2', this.identityFileList[0])
             }
+
             const result = await this.$axios.post('form/indoor/add', formData)
             if(result.status!==200){
               throw new Error(result.data.error)
@@ -192,11 +199,6 @@ export default {
           }
 
         })
-
-
-
-
-
     },
     handleRemove(file) {
       const index = this.fileList.indexOf(file);

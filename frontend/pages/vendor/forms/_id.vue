@@ -56,7 +56,6 @@ export default {
           'Date of Visit',
           'Time of Visit',
           'No. of people in group',
-          'Comments',
         ].join(','),
         ...this.formList.map((item, index) =>
           [
@@ -68,7 +67,6 @@ export default {
             item.dateOfVisit.slice(0, 10),
             item.timeOfVisit,
             item.noOfPeopleInGroup,
-            item.comments,
           ].join(',')
         ),
       ]

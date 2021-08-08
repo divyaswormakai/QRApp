@@ -87,6 +87,8 @@
               rules: [
                 { required: true, message: 'Please input your date of visit!' },
               ],
+                            initialValue: currentTime
+
             },
           ]"
           style="width: 100%"
@@ -100,6 +102,7 @@
               rules: [
                 { required: true, message: 'Please input your time of visit!' },
               ],
+              initialValue: currentTime
             },
           ]"
           use12-hours
@@ -108,7 +111,7 @@
         />
       </a-form-item>
 
-      <a-form-item label="How many people were there in your table/group?">
+      <a-form-item label="How many people are there in your table/group?">
         <a-input-number v-decorator="['noOfPeopleInGroup']" />
       </a-form-item>
 
@@ -120,6 +123,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   name: 'NewFormComponent',
   mounted() {
@@ -133,6 +137,7 @@ export default {
       form: this.$form.createForm(this, { name: 'coordinated' }),
       vendorName: '',
       formSubmitted: false,
+      currentTime:moment()
     }
   },
   methods: {
@@ -155,9 +160,10 @@ export default {
         }
         let postBody = {
           ...this.form.getFieldsValue(),
-          vendorID: this.vendorID,
+          dateOfVisit: this.form.getFieldsValue().dateOfVisit.format('YYYY-MM-DD').toString(),
+          timeOfVisit: this.form.getFieldsValue().timeOfVisit.format('hh:mm A').toString(),
+          vendorID: this.vendorID
         }
-        postBody.timeOfVisit = postBody.timeOfVisit.format('h:mm a').toString()
         const result = await this.$axios.post('form/add', postBody)
         if (result.data.vendorID) {
           this.$message.success('Your form has been received successfully')

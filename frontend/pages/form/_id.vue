@@ -27,34 +27,13 @@
           <td class="table-bold">Time of Visit</td>
           <td>{{ formDetails.timeOfVisit }}</td>
         </tr>
-        <tr>
-          <td class="table-bold">Have Temperature?</td>
-          <td>{{ formDetails.temperature ? 'Yes' : 'No' }}</td>
-        </tr>
-        <tr>
-          <td class="table-bold">Have Cough?</td>
-          <td>{{ formDetails.cough ? 'Yes' : 'No' }}</td>
-        </tr>
-        <tr>
-          <td class="table-bold">Visited Abroad in 14 days?</td>
-          <td>{{ formDetails.abroadIn14Days ? 'Yes' : 'No' }}</td>
-        </tr>
-        <tr>
-          <td class="table-bold">
-            Been in contact with positive person in 14 days?
-          </td>
-          <td>{{ formDetails.contactIn14Days ? 'Yes' : 'No' }}</td>
-        </tr>
-        <tr>
+
           <td class="table-bold">
             How many people were there in your table/group?
           </td>
           <td>{{ formDetails.noOfPeopleInGroup || '-' }}</td>
         </tr>
-        <tr>
-          <td class="table-bold">Comments</td>
-          <td>{{ formDetails.commments || '' }}</td>
-        </tr>
+
       </tbody>
     </table>
   </div>

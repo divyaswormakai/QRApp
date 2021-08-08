@@ -87,7 +87,7 @@
         </div>
 
         <p style=" font-size: 1.25rem; color:black">
-          Safe. Simple. Steady.
+          Safe. Simple. Speedy.
         </p>
 
 

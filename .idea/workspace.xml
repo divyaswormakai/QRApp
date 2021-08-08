@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -21,11 +24,14 @@
   <component name="ChangeListManager">
     <list default="true" id="9fa6a4bb-d9f6-47de-b1d3-7be028f1746d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/form/_id.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/form/_id.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/form/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/form/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/form/indoor/_id.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/form/indoor/_id.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/form/new/_id.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/form/new/_id.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/vendor/_id.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/vendor/_id.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/vendor/forms/_id.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/vendor/forms/_id.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/vendor/qrcode.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/vendor/qrcode.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +61,7 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../QRFinal" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Anurag dai/form" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="D:\Dipesh Dai\QRApp\frontend\node_modules\prettier" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -72,6 +78,14 @@
       <workItem from="1626162489647" duration="916000" />
       <workItem from="1626329896730" duration="5896000" />
       <workItem from="1626351487789" duration="1341000" />
+      <workItem from="1627224067733" duration="811000" />
+      <workItem from="1627439553562" duration="1095000" />
+      <workItem from="1627478690448" duration="838000" />
+      <workItem from="1627713278563" duration="158000" />
+      <workItem from="1627716535787" duration="527000" />
+      <workItem from="1627830205297" duration="51000" />
+      <workItem from="1628136015983" duration="504000" />
+      <workItem from="1628414407428" duration="3332000" />
     </task>
     <servers />
   </component>
@@ -95,9 +109,14 @@
       <screen x="1366" y="0" width="1920" height="1040" />
     </state>
     <state x="2056" y="372" key="#Prettier/0.0.1366.728/1366.0.1920.1040@1366.0.1920.1040" timestamp="1626163390548" />
-    <state x="2106" y="275" key="FileChooserDialogImpl" timestamp="1626163427487">
-      <screen x="1366" y="0" width="1920" height="1040" />
+    <state x="526" y="195" key="FileChooserDialogImpl" timestamp="1627478948501">
+      <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="2106" y="275" key="FileChooserDialogImpl/0.0.1366.728/1366.0.1920.1040@1366.0.1920.1040" timestamp="1626163427487" />
+    <state x="526" y="195" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1627478948501" />
+    <state x="1989" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1627439782643">
+      <screen x="1366" y="0" width="1920" height="1050" />
+    </state>
+    <state x="1989" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1366.738/1366.0.1920.1050@1366.0.1920.1050" timestamp="1627439782643" />
   </component>
 </project>

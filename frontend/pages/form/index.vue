@@ -60,12 +60,9 @@ export default {
           'Vendor Name',
           'Date of Visit',
           'Time of Visit',
-          'Do you have temperature?',
-          'Do you have cough?',
-          'Have you travelled abord in past 14 days?',
-          'Have you been in positive contact in 14 days?',
-          'How many people were there in your table/group?',
-          'Comments',
+
+          'How many people are there in your table/group?',
+
         ].join(','),
         ...this.formList.map((item, index) =>
           [
@@ -76,12 +73,8 @@ export default {
             item.vendorID?.vendorName || '',
             item.dateOfVisit.slice(0, 10),
             item.timeOfVisit,
-            item.temperature ? 'Yes' : 'No',
-            item.cough ? 'Yes' : 'No',
-            item.abroadIn14Days ? 'Yes' : 'No',
-            item.contactIn14Days ? 'Yes' : 'No',
+
             item.noOfPeopleInGroup,
-            item.comments,
           ].join(',')
         ),
       ]
