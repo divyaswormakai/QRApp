@@ -14,8 +14,6 @@
       <h4>Powered by:</h4>
       <img src="~assets/esociety-logo.svg" alt="E-society logo" width="100" />
     </div>
-
-
     <a-button type="primary" @click="downloadPNGQR" id="png-btn"
     >Save PNG
     </a-button
@@ -124,6 +122,26 @@
     </a-button
     >
 
+    <div v-show="vendorName=='Test vendorr'">
+      <h3>School Demo Form (WIP)</h3>
+      <div class="qr-container" id="qr-container-school">
+        <h4>Please scan this QR code for Contact Tracing Form</h4>
+        <qrcode-vue
+          v-show="schoolCode.length > 0"
+          :value="schoolCode"
+          size="400"
+          class="vendor-qrcode"
+          id="school-qrcode"
+        ></qrcode-vue>
+        <a :href="schoolCode" target="_blank">{{ schoolCode }}</a>
+        <h4>Powered by:</h4>
+        <img src="~assets/esociety-logo.svg" alt="E-society logo" width="100" />
+      </div>
+      <a-button type="primary" @click="downloadPNGSchool" id="png-btn-school"
+      >Save School PNG
+      </a-button
+      >
+    </div>
     <div id="img-out"></div>
   </div>
 </template>
@@ -147,13 +165,15 @@ export default {
     this.vendorFormURL = this.$route.query.url;
     this.vendorIndoorFormURL = this.$route.query.url.replace("new", "indoor");
     this.vendorName = this.$route.query.vendorName;
+    this.schoolCode =  this.$route.query.url.replace("new", "school");
     console.log(this.$route.query.url.replace("new", "indoor"));
   },
   data() {
     return {
       vendorFormURL: "",
       vendorIndoorFormURL: "",
-      vendorName:""
+      vendorName:"",
+      schoolCode:""
     };
   },
   methods: {
@@ -183,6 +203,16 @@ export default {
         .then(function(dataUrl) {
           const link = document.createElement("a");
           link.download = "poster-qr.jpg";
+          link.href = dataUrl;
+          link.click();
+        });
+    },
+    downloadPNGSchool(){
+      htmlToImage
+        .toJpeg(document.getElementById("qr-container-school"), { quality: 0.95 })
+        .then(function(dataUrl) {
+          const link = document.createElement("a");
+          link.download = "poster-school-demo.jpg";
           link.href = dataUrl;
           link.click();
         });
