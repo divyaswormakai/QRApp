@@ -2,16 +2,16 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 // const uniqueValidator = require('mongoose-unique-validator');
 
-const VendorSchema = new Schema({
-	vendorName: {
+const SchoolSchema = new Schema({
+	schoolName: {
 		type: String,
 		required: true,
 	},
-	vendorLocation: {
+	schoolLocation: {
 		type: String,
 		required: true,
 	},
-	vendorContact: {
+	schoolContact: {
 		type: String,
 		required: true,
 	},
@@ -19,21 +19,22 @@ const VendorSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	vendorSecondaryContact: {
-		type: String,
-	},
-	vendorEmail: {
+	schoolEmail: {
 		type: String,
 		required: true,
 	},
-	active: {
-		type: Boolean,
-		required: true,
-		default: true,
+	classRoomList: [
+		{
+			type: String,
+		},
+	],
+	logoURL: {
+		type: String,
+		default: null,
 	},
 });
 
-VendorSchema.set('toJSON', {
+SchoolSchema.set('toJSON', {
 	transform: (document, returnedObject) => {
 		returnedObject.id = returnedObject._id.toString();
 		delete returnedObject.password;
@@ -43,5 +44,5 @@ VendorSchema.set('toJSON', {
 	},
 });
 
-// VendorSchema.plugin(uniqueValidator);
-module.exports = mongoose.model('Vendor', VendorSchema);
+// SchoolSchema.plugin(uniqueValidator);
+module.exports = mongoose.model('School', SchoolSchema);

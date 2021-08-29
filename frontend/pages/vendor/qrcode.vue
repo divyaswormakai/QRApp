@@ -19,6 +19,87 @@
     </a-button
     >
 
+    <h3>Poster Contact Tracing Form</h3>
+    <div class="qr-container" id="qr-contact-poster" style="background-color: white">
+      <img
+        src="~assets/esociety_logo_qr.svg"
+        alt="E-society logo"
+        width="100"
+        style="margin-bottom: 25px"
+      />
+      <p style="color: #f6b618; font-size: 2.5rem; margin: 0; ">
+        CONTACT TRACING FORM
+      </p>
+      <p
+        style="color: black; font-size: 2.25rem; margin: 0;"
+      >
+        <b>USING QR CODE</b>
+      </p>
+      <div
+        style="
+          background-color: #f6b618;
+          color: white;
+          margin: 2vh 0px;
+          padding: 5px 50px;
+          border-radius: 25px;
+          font-weight: bold;
+        "
+      >
+        Scan This Code
+      </div>
+
+      <div
+        class="container-body"
+      >
+        <!--        BORDER IN CANVAS-->
+        <div
+          class="qr-code"
+        >
+          <qrcode-vue
+            v-show="vendorFormURL.length > 0"
+            :value="vendorFormURL"
+            size="250"
+            class="vendor-qrcode"
+            id="vendor-qrcode-contact-poster"
+          ></qrcode-vue>
+        </div>
+
+        <p style=" font-size: 1.25rem; color:black">
+          Safe. Simple. Speedy.
+        </p>
+
+
+        <ul style="color: white; font-size: 16px; font-weight: 600; text-align: left; padding-right: 2%">
+          <li>Open QR Scanner/Camera & Scan The Code.</li>
+          <li>Fill In Contact Details.</li>
+          <li>Receive Immediate Confirmation Email.</li>
+        </ul>
+        <div style="font-weight: 900; font-size: 1.25rem">
+          <span style="text-decoration: line-through">&nbsp;&nbsp;&nbsp;</span>
+          GDPR COMPLIANT
+          <span style="text-decoration: line-through">&nbsp;&nbsp;&nbsp;</span>
+        </div>
+        <p style="    padding: 0px 18%;
+    font-size: 12px;
+    font-weight: 600;
+">
+          Your information will be kept for 28 days in accordance with; The Health Act 1947 (Section 31A - Temporary Restrictions) (Covid-19) (No. 2) Regulations 2021 (SI 217 of 2021).
+
+        </p>
+        <div
+          class="footer-3"
+        >
+          <div style="font-weight: bolder;">{{vendorName}}</div>
+
+        </div>
+      </div>
+    </div>
+    <a-button type="primary" @click="downloadContactPoster" id="png-btn-poster-contact"
+    >Save Contact Poster QR PNG
+    </a-button
+    >
+
+<!--    region-->
     <h3>Indoor Contact Tracing Form</h3>
     <div class="qr-container" id="qr-container-indoor">
       <h4>Please scan this QR code for Indoor Contact Tracing Form</h4>
@@ -143,6 +224,7 @@
       >
     </div>
     <div id="img-out"></div>
+<!--    endregion-->
   </div>
 </template>
 
@@ -166,7 +248,6 @@ export default {
     this.vendorIndoorFormURL = this.$route.query.url.replace("new", "indoor");
     this.vendorName = this.$route.query.vendorName;
     this.schoolCode =  this.$route.query.url.replace("new", "school");
-    console.log(this.$route.query.url.replace("new", "indoor"));
   },
   data() {
     return {
@@ -213,6 +294,16 @@ export default {
         .then(function(dataUrl) {
           const link = document.createElement("a");
           link.download = "poster-school-demo.jpg";
+          link.href = dataUrl;
+          link.click();
+        });
+    },
+    downloadContactPoster(){
+      htmlToImage
+        .toJpeg(document.getElementById("qr-contact-poster"), { quality: 0.95 })
+        .then(function(dataUrl) {
+          const link = document.createElement("a");
+          link.download = "poster-contact-form.jpg";
           link.href = dataUrl;
           link.click();
         });

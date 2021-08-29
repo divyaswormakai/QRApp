@@ -24,13 +24,15 @@
   <component name="ChangeListManager">
     <list default="true" id="9fa6a4bb-d9f6-47de-b1d3-7be028f1746d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/layouts/default.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/layouts/default.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/nuxt.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/nuxt.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/form/_id.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/form/_id.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/form/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/form/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/form/indoor/_id.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/form/indoor/_id.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/form/new/_id.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/form/new/_id.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/vendor/forms/_id.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/vendor/forms/_id.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/form/school/_id.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/form/school/_id.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/vendor/qrcode.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/vendor/qrcode.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/utils/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/utils/constants.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,6 +44,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Vue Single File Component" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -67,6 +70,11 @@
     <property name="vue.rearranger.settings.migration" value="true" />
     <property name="vuejs.nuxt.types-notification-shown" value="true" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Dipesh Dai\QRApp\frontend\assets" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -86,6 +94,16 @@
       <workItem from="1627830205297" duration="51000" />
       <workItem from="1628136015983" duration="504000" />
       <workItem from="1628414407428" duration="3332000" />
+      <workItem from="1628522154262" duration="3178000" />
+      <workItem from="1628527860133" duration="613000" />
+      <workItem from="1629046156641" duration="1071000" />
+      <workItem from="1629129032309" duration="1279000" />
+      <workItem from="1629434026955" duration="9000" />
+      <workItem from="1630148954081" duration="466000" />
+      <workItem from="1630164894740" duration="602000" />
+      <workItem from="1630174982801" duration="344000" />
+      <workItem from="1630227708390" duration="624000" />
+      <workItem from="1630231999069" duration="17616000" />
     </task>
     <servers />
   </component>
@@ -109,14 +127,22 @@
       <screen x="1366" y="0" width="1920" height="1040" />
     </state>
     <state x="2056" y="372" key="#Prettier/0.0.1366.728/1366.0.1920.1040@1366.0.1920.1040" timestamp="1626163390548" />
+    <state x="2100" y="327" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1630175119736">
+      <screen x="1366" y="0" width="1920" height="1050" />
+    </state>
+    <state x="2100" y="327" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1366.738/1366.0.1920.1050@1366.0.1920.1050" timestamp="1630175119736" />
     <state x="526" y="195" key="FileChooserDialogImpl" timestamp="1627478948501">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="2106" y="275" key="FileChooserDialogImpl/0.0.1366.728/1366.0.1920.1040@1366.0.1920.1040" timestamp="1626163427487" />
     <state x="526" y="195" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1627478948501" />
-    <state x="1989" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1627439782643">
+    <state x="2033" y="258" width="585" height="534" key="find.popup" timestamp="1630251790787">
       <screen x="1366" y="0" width="1920" height="1050" />
     </state>
-    <state x="1989" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1366.738/1366.0.1920.1050@1366.0.1920.1050" timestamp="1627439782643" />
+    <state x="2033" y="258" width="585" height="534" key="find.popup/0.0.1366.738/1366.0.1920.1050@1366.0.1920.1050" timestamp="1630251790787" />
+    <state x="1989" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1630244260805">
+      <screen x="1366" y="0" width="1920" height="1050" />
+    </state>
+    <state x="1989" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1366.738/1366.0.1920.1050@1366.0.1920.1050" timestamp="1630244260805" />
   </component>
 </project>

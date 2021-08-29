@@ -92,6 +92,8 @@
             },
           ]"
           style="width: 100%"
+          format="DD-MM-YYYY"
+
         />
       </a-form-item>
       <a-form-item label="Time of Visit">
@@ -106,7 +108,7 @@
             },
           ]"
           use12-hours
-          format="h:mm:a"
+          format="hh:mm A"
           style="width: 100%"
         />
       </a-form-item>

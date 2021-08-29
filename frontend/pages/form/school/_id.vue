@@ -18,7 +18,7 @@
         <b> Data Protection Notice:</b> Your personal data is being collected on
         this form in order to help prevent the spread of COVID-19 in
         <b
-        ><i>"{{ vendorName }}"</i></b
+        ><i>"{{ schoolName }} - {{roomNumber}}"</i></b
         >
         and to protect our staff. Your personal data is being processed in
         accordance with Article 9(2)(i) of the General Data Protection
@@ -39,7 +39,16 @@
       </p>
 
       <a-form-item label="Vendor">
-        <a-input v-model="vendorName" disabled />
+        <a-input v-model="schoolName" disabled />
+      </a-form-item>
+      <a-form-item label="Room Number">
+        <a-input
+          v-decorator="[
+            'roomNumber',
+            {initialValue:roomNumber}
+          ]"
+          disabled
+        />
       </a-form-item>
       <a-form-item label="Email">
         <a-input
@@ -64,6 +73,14 @@
           ]"
         />
       </a-form-item>
+      <a-form-item label="Student ID">
+        <a-input
+          v-decorator="[
+            'studentID',
+
+          ]"
+        />
+      </a-form-item>
       <a-form-item label="Contact Number">
         <a-input
           v-decorator="[
@@ -82,7 +99,7 @@
       <a-form-item label="Date of Entry">
         <a-date-picker
           v-decorator="[
-            'dateOfEntry',
+            'dateOfVisit',
             {
               rules: [
                 { required: true, message: 'Please input your date of entry!' },
@@ -91,13 +108,15 @@
 
             },
           ]"
+          format="DD-MM-YYYY"
           style="width: 100%"
+
         />
       </a-form-item>
       <a-form-item label="Time of Entry">
         <a-time-picker
           v-decorator="[
-            'timeOfEntry',
+            'timeOfVisit',
             {
               rules: [
                 { required: true, message: 'Please input your time of entry!' },
@@ -106,33 +125,8 @@
             },
           ]"
           use12-hours
-          format="h:mm:a"
+          format="hh:mm A"
           style="width: 100%"
-        />
-      </a-form-item>
-
-      <a-form-item label="Which class did you attend">
-        <a-select
-
-          v-decorator="[
-            'fullName',
-            {
-              rules: [
-                { required: true, message: 'Please input your full name!' },
-              ],
-            },
-          ]"
-        >
-          <a-select-option v-for="option in classes" :key="option">
-            {{option}}
-          </a-select-option>
-        </a-select>
-      </a-form-item>
-      <a-form-item label="Where were you seated?">
-        <a-input
-          v-decorator="[
-            'seatNo',
-          ]"
         />
       </a-form-item>
 
@@ -151,34 +145,35 @@ export default {
 name: "SchoolForm",
 
   mounted() {
-    const vendorID = window.location?.pathname?.split('/')[3]
-    this.vendorID = vendorID
-    // this.getVendorName()
+    const schoolID = window.location?.pathname?.split('/')[3]
+    this.schoolID = schoolID
+    this.roomNumber = window?.location?.search?.split("=")[1]
+
+    this.getSchoolName()
   },
   data() {
     return {
-      vendorID: '',
+      schoolID: '',
       form: this.$form.createForm(this, { name: 'coordinated' }),
-      vendorName: '',
+      schoolName: '',
       formSubmitted: false,
       currentTime:moment(),
-      classes: ['101','102','103','201','202','203','301','302','303']
+      roomNumber:'',
     }
   },
   methods: {
-    async getVendorName() {
-      const result = await this.$axios.post('vendor/' + this.vendorID)
-      if (result.data.vendorName) {
-        this.vendorName = result.data.vendorName
+    async getSchoolName() {
+      const result = await this.$axios.post('school/' + this.schoolID)
+      if (result.data.schoolName) {
+        this.schoolName = result.data.schoolName
       } else {
         this.$message.error(
-          'Could not find the vendor. Please scan the QR again'
+          'Could not find the school. Please scan the QR again'
         )
       }
     },
     async handleNewFormAddition(e) {
       e.preventDefault()
-      return
       await this.form.validateFields(async (err) => {
         if (err) {
           this.$message.error('Could not submit form. Please try again.')
@@ -188,10 +183,10 @@ name: "SchoolForm",
           ...this.form.getFieldsValue(),
           dateOfVisit: this.form.getFieldsValue().dateOfVisit.format('YYYY-MM-DD').toString(),
           timeOfVisit: this.form.getFieldsValue().timeOfVisit.format('hh:mm A').toString(),
-          vendorID: this.vendorID
+          schoolID: this.schoolID
         }
-        const result = await this.$axios.post('form/add', postBody)
-        if (result.data.vendorID) {
+        const result = await this.$axios.post('form/school/add', postBody)
+        if (result.data.schoolID) {
           this.$message.success('Your form has been received successfully')
           this.formSubmitted = true
         }

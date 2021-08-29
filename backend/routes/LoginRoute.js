@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 
 const Vendor = require('../models/Vendor');
 const Admin = require('../models/Admin');
+const School = require('../models/School');
+
 const { secret } = require('../config/keys');
 const jwt = require('jsonwebtoken');
 
@@ -76,6 +78,39 @@ router.post('/admin', async (req, res) => {
 		return res.status(200).send({ token });
 	} catch (err) {
 		return res.status(400).json({ error: err.message });
+	}
+});
+
+// @Route   POST api/login/school
+// @desc    Login for school
+// @access  Public
+router.post('/school', async (req, res) => {
+	try {
+		const { schoolEmail, password } = req.body;
+
+		const school = await School.findOne({
+			schoolEmail,
+		});
+		if (!school) {
+			throw new Error('Could not find user');
+		}
+
+		const isPasswordMatch = await bcrypt.compare(password, school.password);
+
+		if (!isPasswordMatch) {
+			throw new Error('Password do not match');
+		}
+
+		const tokenDetails = {
+			email: school.vendorEmail,
+			id: school._id,
+			name: school.vendorName,
+		};
+		const token = jwt.sign(tokenDetails, secret);
+
+		return res.status(200).send({ token, school: school.toJSON() });
+	} catch (err) {
+		return res.status(400).json({ error: 'Could not load the vendor data.' });
 	}
 });
 

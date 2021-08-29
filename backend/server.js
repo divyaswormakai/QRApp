@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const morgan = require('morgan');
+const multer = require('multer');
 
 require('dotenv').config();
 
@@ -20,13 +21,15 @@ const FormRoute = require('./routes/FormRoute');
 const AdminRoute = require('./routes/AdminRoute');
 const LoginRoute = require('./routes/LoginRoute');
 const ErrorRoute = require('./routes/ErrorRoute');
+const SchoolRoute = require('./routes/SchoolRoute');
 
 // Middlewares
 const adminAuth = require('./middleware/adminAuth');
 
 // AWS Service
 const awsSES = require('./controller/awsSES');
-
+// purgeData servce
+const purgeData = require('./controller/purgeData');
 app.use(
 	morgan(':method :url :status :res[content-length] - :response-time ms')
 );
@@ -43,9 +46,11 @@ app.use(express.static(path.join(__dirname, 'build')));
 // Apply the routes
 
 app.use('/api/uploads', express.static(path.join(`${__dirname}/uploads`)));
+app.use('/api/logos', express.static(path.join(`${__dirname}/logos`)));
 app.use('/api/form', FormRoute);
 app.use('/api/login', LoginRoute);
 app.use('/api/vendor', VendorRoute);
+app.use('/api/school', SchoolRoute);
 app.use('/api/admin', adminAuth, AdminRoute);
 app.use('/api/*', ErrorRoute);
 app.use('*', (req, res) =>
@@ -70,11 +75,14 @@ mongoose
 
 // Port declaration
 const port = process.env.PORT || 3001;
-
 // Init the express.js server
 app.listen(port, () => console.log(`Server running on ${port}`));
 // Schedule cron job
-cron.schedule('30 23  * * *', () => {
+cron.schedule('0 23  * * *', () => {
 	// SEND MAIL TO ALL ACTIVE VENDORS WITH LIST OF FORMS THAT THEY HAVE BEEN SUBMITTED
 	awsSES.vendorEmailAWS_SES();
+	// SEND MAIL TO SCHOOLS
+	awsSES.schoolFormsForSchool_SES();
+	// PURGE OLD DATA
+	purgeData.purgeOldData();
 });

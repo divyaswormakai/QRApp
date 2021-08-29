@@ -68,6 +68,8 @@
             },
           ]"
           style="width: 100%"
+          format="DD-MM-YYYY"
+
         />
       </a-form-item>
       <a-form-item label="Time of Visit">

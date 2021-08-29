@@ -5,12 +5,13 @@
         <img src="~assets/esociety-logo.svg" alt="E-society logo" width="150" />
       </a>
       <div style="flex-direction: row; display: flex">
-        <div v-show="!isVendor" class="logout-link">
+        <div v-show="!isVendorOrSchool" class="logout-link">
           <a href="/vendor" class="logout-link">Vendor </a>|
           <a href="/form" class="logout-link"> Forms </a>|&nbsp;
+          <a href="/school" class="logout-link">School </a>|&nbsp;
         </div>
 
-        <a @click="LogoutHandler()" class="logout-link"> Logout</a>
+        <a @click="LogoutHandler()" class="logout-link">Logout</a>
       </div>
     </div>
     <div class="container">
@@ -37,7 +38,7 @@ export default {
   data() {
     return {
       loggedIn: false,
-      isVendor: false,
+      isVendorOrSchool: false,
     }
   },
 
@@ -53,9 +54,9 @@ export default {
       this.loggedIn =
         this.$cookies.get(LOCAL_STORAGE_TOKEN) &&
         this.$cookies.get(LOCAL_STORAGE_TOKEN).length > 0
-      this.isVendor =
+      this.isVendorOrSchool =
         this.$cookies.get(LOCAL_STORAGE_ROLE_TYPE) &&
-        this.$cookies.get(LOCAL_STORAGE_ROLE_TYPE) === 'vendor'
+        (this.$cookies.get(LOCAL_STORAGE_ROLE_TYPE) === 'vendor' || this.$cookies.get(LOCAL_STORAGE_ROLE_TYPE) === 'school')
     },
   },
 }

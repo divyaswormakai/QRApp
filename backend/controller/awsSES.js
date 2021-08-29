@@ -3,21 +3,25 @@ const nodemailer = require('nodemailer');
 const fs = require('fs');
 const Form = require('../models/Form');
 const Vendor = require('../models/Vendor');
+const School = require('../models/School');
+const SchoolForm = require('../models/SchoolForm');
+const moment = require('moment');
+
+// AWS configuration
+AWS.config.loadFromPath('./aws.json');
+
+AWS.config.getCredentials(function (err) {
+	if (err) {
+		console.log(err.stack);
+		exit(0);
+	}
+});
+
+AWS.config.update({ region: 'us-west-2' });
+
+const ses = new AWS.SES({ apiVersion: '2010-12-01' });
 
 exports.emailViaAWS_SES = function async(savedForm) {
-	// AWS configuration
-	AWS.config.loadFromPath('./aws.json');
-
-	AWS.config.getCredentials(function (err) {
-		if (err) {
-			console.log(err.stack);
-			exit(0);
-		}
-	});
-
-	AWS.config.update({ region: 'us-west-2' });
-
-	const ses = new AWS.SES({ apiVersion: '2010-12-01' });
 	const params = {
 		Destination: {
 			ToAddresses: [savedForm.email], // Email address/addresses that you want to send your email
@@ -33,7 +37,8 @@ exports.emailViaAWS_SES = function async(savedForm) {
 									<p>
 									<b>Data Protection Notice:</b> Your personal data is being collected on this form in order to help prevent the spread of COVID-19 in <b><i>"${
 										savedForm.vendorID.vendorName
-									}"</i></b> and to protect our staff and our customers. Your personal data is being processed in accordance with Article 9(2)(i) of the General Data Protection Regulation, and Section 53 of the Data Protection Act 2018. The information you provide on this form will not be used for any other purpose, and will be strictly confidential. The form will be accessible only to administrator of e-society and the vendor for whom you have filled the form. Your data will be retained for 12 weeks.
+									}"</i></b> and to protect our staff and our customers. Your personal data is being processed in accordance with Article 9(2)(i) of the General Data Protection Regulation, and Section 53 of the Data Protection Act 2018. The information you provide on this form will not be used for any other purpose, and will be strictly confidential. The form will be accessible only to administrator of e-society and the vendor for whom you have filled the form. 
+									The Health Act 1947 (Section 31A - Temporary Restrictions) (Covid-19) (No. 2) Regulations 2021 (SI 217 of 2021) provide that a specified person shall retain and make available records made under paragraph (2) for the purposes of inspection by a member of the Garda Síochána acting in the course of his or her duties under these Regulations, or by a person appointed by the Health Service Executive for the purposes of the programme commonly known as the Covid-19 Contact Management Programme, for a period of 28 days after the records have been made. Should a confirmed case arise, the Contact Management Programme will take the necessary action to contact those who need to be contacted.
 									</p>
 									<p>Thank you for filling out the contact tracing form for ${
 										savedForm.vendorID.vendorName
@@ -49,58 +54,17 @@ exports.emailViaAWS_SES = function async(savedForm) {
 										</tr>
 										<tr>
 											<td><b>Date Of Visit</b></td>
-											<td>${savedForm.dateOfVisit}</td>
+											<td>${moment(savedForm.dateOfVisit).format('YYYY-MM-DD')}</td>
 										</tr>
 										<tr>
 											<td><b>Time Of visit</b></td>
 											<td>${savedForm.timeOfVisit}</td>
 										</tr>
 										<tr>
-											<td><b>Do you have temperature?</b></td>
-											<td ${
-												savedForm.temperature
-													? "style='background-color:red; color:white;'"
-													: ''
-											}>${savedForm.temperature ? 'Yes' : 'No'}</td>
-										</tr>
-										<tr>
-											<td><b>Do you have cough?</b></td>
-											<td ${savedForm.cough ? "style='background-color:red; color:white;'" : ''}>
-												${savedForm.cough ? 'Yes' : 'No'}
-											</td>
-										</tr>
-										<tr>
-											<td><b>Have you been abroad in the past 14 days?</b></td>
-											<td ${
-												savedForm.abroadIn14Days
-													? "style='background-color:red; color:white;'"
-													: ''
-											}>
-												${savedForm.abroadIn14Days ? 'Yes' : 'No'}
-											</td>
-										</tr>
-										<tr>
-											<td><b>Have you had contact with COVID positive person in the pas 14 days?</b></td>
-											<td ${
-												savedForm.contactIn14Days
-													? "style='background-color:red; color:white;'"
-													: ''
-											}>
-												${savedForm.contactIn14Days ? 'Yes' : 'No'}
-											</td>
-										</tr>
-										<tr>
 											<td><b>How many people are there in your group/table?</b></td>
 											<td>${savedForm.noOfPeopleInGroup || ''}</td>
 										</tr>
-										<tr>
-											<td><b>Are you vaccinated?</b></td>
-											<td>${savedForm.vaccinationStatus ? 'Yes' : 'No'}</td>
-										</tr>
-										<tr>
-											<td><b>Have contracted COVID-19 over the past 9 months?</b></td>
-											<td>${savedForm.covidOver9Months ? 'Yes' : 'No'}</td>
-										</tr>
+									
 										<tr>
 											<td><b>Comment</b></td>
 											<td>${savedForm.comments || ''}</td>
@@ -145,18 +109,6 @@ exports.emailViaAWS_SES = function async(savedForm) {
 };
 
 exports.vendorEmailAWS_SES = async () => {
-	AWS.config.loadFromPath('./aws.json');
-
-	AWS.config.getCredentials(function (err) {
-		if (err) {
-			console.log(err.stack);
-			exit(0);
-		}
-	});
-
-	AWS.config.update({ region: 'us-west-2' });
-
-	const ses = new AWS.SES({ apiVersion: '2010-12-01' });
 	const now = new Date();
 	const yesterday = new Date();
 	yesterday.setDate(now.getDate() - 1);
@@ -214,10 +166,6 @@ exports.vendorEmailAWS_SES = async () => {
 								<th>Date Of Visit</th>
 								<th>Time Of Visit</th>
 								<th>Contact Number</th>
-								<th>Do you have temperature?</th>
-								<th>Do you have cough?</th>
-								<th>Have you been abroad in the past 14 days?</th>
-								<th>Have you had contact with COVID positive person in the pas 14 days? </th>
 								<th>How many people were there in your table/group?</th>
 								<th>Comments</th>
 							</tr>
@@ -226,24 +174,10 @@ exports.vendorEmailAWS_SES = async () => {
 							<tr>
 								<td>${form.fullName}</td>
 								<td>${form.email}</td>
-								<td>${form.dateOfVisit}</td>
+								<td>${moment(form.dateOfVisit).format('YYYY-MM-DD')}</td>
 								<td>${form.timeOfVisit}</td>
-								<td>${form?.phoneNumber || ''}</td>
-								<td ${form.temperature ? "style='background-color:red; color:white;'" : ''}>
-									${form.temperature ? 'Yes' : 'No'}
-								</td>
-								<td ${form.cough ? "style='background-color:red; color:white;'" : ''}>
-									${form.cough ? 'Yes' : 'No'}
-								</td>
-								<td ${form.abroadIn14Days ? "style='background-color:red; color:white;'" : ''}>
-									${form.abroadIn14Days ? 'Yes' : 'No'}
-								</td>
-								<td ${form.contactIn14Days ? "style='background-color:red; color:white;'" : ''}>
-									${form.contactIn14Days ? 'Yes' : 'No'}
-								</td>
+								<td>${form.phoneNumber || ''}</td>
 								<td>${form.noOfPeopleInGroup}</td>
-								<td>${form.vaccinationStatus ? 'Yes' : 'No'}</td>
-								<td>${form.covidOver9Months ? 'Yes' : 'No'}</td>
 								<td>${form.comments || ''}</td>
 							</tr>
 				`;
@@ -252,24 +186,10 @@ exports.vendorEmailAWS_SES = async () => {
 							<tr>
 								<td>${form.fullName}</td>
 								<td>${form.email}</td>
-								<td>${form.dateOfVisit}</td>
+								<td>${moment(form.dateOfVisit).format('YYYY-MM-DD')}</td>
 								<td>${form.timeOfVisit}</td>
-								<td>${form?.phoneNumber || ''}</td>
-								<td ${form.temperature ? "style='background-color:red; color:white;'" : ''}>
-									${form.temperature ? 'Yes' : 'No'}
-								</td>
-								<td ${form.cough ? "style='background-color:red; color:white;'" : ''}>
-									${form.cough ? 'Yes' : 'No'}
-								</td>
-								<td ${form.abroadIn14Days ? "style='background-color:red; color:white;'" : ''}>
-									${form.abroadIn14Days ? 'Yes' : 'No'}
-								</td>
-								<td ${form.contactIn14Days ? "style='background-color:red; color:white;'" : ''}>
-									${form.contactIn14Days ? 'Yes' : 'No'}
-								</td>
+								<td>${form.phoneNumber || ''}</td>
 								<td>${form.noOfPeopleInGroup}</td>
-								<td>${form.vaccinationStatus ? 'Yes' : 'No'}</td>
-								<td>${form.covidOver9Months ? 'Yes' : 'No'}</td>
 								<td>${form.comments || ''}</td>
 							</tr>
 							`;
@@ -334,37 +254,62 @@ exports.vendorEmailAWS_SES = async () => {
 };
 
 exports.indorEmailviaAWS_SES = async (formContent, res) => {
-	// console.log(formContent);
-	// AWS configuration
-	AWS.config.loadFromPath('./aws.json');
-
-	AWS.config.getCredentials(function (err) {
-		if (err) {
-			console.log(err.stack);
-			exit(0);
-		}
-	});
-
-	AWS.config.update({ region: 'us-west-2' });
-	const ses = new AWS.SES({ apiVersion: '2010-12-01' });
-
 	let transporter = nodemailer.createTransport({
 		SES: ses,
 	});
-
-	var tmp_path = formContent.certificate.path;
+	let attachments = [];
+	let vendorAttachments = [];
+	if (formContent.certificate) {
+		attachments.push({
+			filename:
+				formContent.fullName.split(' ')[0] +
+				'-' +
+				formContent.certificate.filename,
+			content: fs.createReadStream(formContent.certificate.path),
+		});
+		vendorAttachments.push({
+			filename:
+				formContent.fullName.split(' ')[0] +
+				'-' +
+				formContent.certificate.filename,
+			content: fs.createReadStream(formContent.certificate.path),
+		});
+	}
+	if (formContent.identity) {
+		attachments.push({
+			filename:
+				formContent.fullName.split(' ')[0] +
+				'-' +
+				formContent.identity.filename,
+			content: fs.createReadStream(formContent.identity.path),
+		});
+		vendorAttachments.push({
+			filename:
+				formContent.fullName.split(' ')[0] +
+				'-' +
+				formContent.identity.filename,
+			content: fs.createReadStream(formContent.identity.path),
+		});
+	}
 	// send mail with defined transport object
-	let info = await transporter.sendMail({
+	await transporter.sendMail({
 		from: 'oisin@e-society.ie',
 		to: formContent.email,
-		subject: 'Thanks for filling out the contact form', // Subject line
+		subject: `Ref: ${
+			formContent.refNo || ''
+		}. Thanks for Uploading Verification Documents`, // Subject line
 		html: `<html>
 								<body>
 									<h3>Dear ${formContent.fullName},</h3>
 									<p>
-									<b>Data Protection Notice:</b> Your personal data is being collected on this form in order to help prevent the spread of COVID-19 in <b><i>"${formContent.vendor.vendorName}"</i></b> and to protect our staff and our customers. Your personal data is being processed in accordance with Article 9(2)(i) of the General Data Protection Regulation, and Section 53 of the Data Protection Act 2018. The information you provide on this form will not be used for any other purpose, and will be strictly confidential. The form will be accessible only to administrator of e-society and the vendor for whom you have filled the form. Your data will be retained for 12 weeks.
+									<b>Data Protection Notice:</b> 
+									<br/>
+									Personal data contained in a proof of immunity shall be processed only for the purpose of accessing and verifying the information included in such proof of immunity in connection with the admittance of permitted persons to relevant indoor premises.
+
 									</p>
-									<p>Thank you for filling out the contact tracing form for ${formContent.vendor.vendorName}. The following table shows the information that was collected.</p>
+									<p>Thank you for filling out the verification form for ${
+										formContent.vendor.vendorName
+									}. The following table shows the information that is checked.</p>
 									<table>
 										<tr>
 											<td><b>Full Name</b></td>
@@ -376,11 +321,15 @@ exports.indorEmailviaAWS_SES = async (formContent, res) => {
 										</tr>
 										<tr>
 											<td><b>Date Of Visit</b></td>
-											<td>${formContent.dateOfVisit}</td>
+											<td>${moment(formContent.dateOfVisit).format('YYYY-MM-DD')}</td>
 										</tr>
 										<tr>
 											<td><b>Time Of visit</b></td>
 											<td>${formContent.timeOfVisit}</td>
+										</tr>
+										<tr>
+											<td><b>Reference Number</b></td>
+											<td>${formContent.refNo}</td>
 										</tr>							
 									</table>
 									<br/>
@@ -394,28 +343,23 @@ exports.indorEmailviaAWS_SES = async (formContent, res) => {
 									</div>
 								</body>
 							</html>`, // html version
-		attachments: [
-			{
-				filename:
-					formContent.fullName.split(' ')[0] +
-					'-' +
-					formContent.certificate.filename,
-				content: fs.createReadStream(tmp_path),
-			},
-		],
+		attachments: [...attachments],
 	});
-
-	let toVendor = await transporter.sendMail({
+	await transporter.sendMail({
 		from: 'oisin@e-society.ie',
 		to: formContent.vendor.vendorEmail,
-		subject: `Details of Person for entry at ${formContent.dateOfVisit},${formContent.timeOfVisit}`, // Subject line
+		subject: `Ref: ${formContent.refNo || ''}. Details of ${
+			formContent.fullName
+		} for entry at ${formContent.dateOfVisit},${formContent.timeOfVisit}`, // Subject line
 		html: `<html>
 								<body>
 									<h3>Dear ${formContent.vendor.vendorName},</h3>
 									<p>
-									<b>Data Protection Notice:</b> Your personal data is being collected on this form in order to help prevent the spread of COVID-19 in <b><i>"${formContent.vendor.vendorName}"</i></b> and to protect our staff and our customers. Your personal data is being processed in accordance with Article 9(2)(i) of the General Data Protection Regulation, and Section 53 of the Data Protection Act 2018. The information you provide on this form will not be used for any other purpose, and will be strictly confidential. The form will be accessible only to administrator of e-society and the vendor for whom you have filled the form. Your data will be retained for 12 weeks.
+									<b>Data Protection Notice:</b> 
+									<br/>
+									Personal data contained in a proof of immunity shall be processed only for the purpose of accessing and verifying the information included in such proof of immunity in connection with the admittance of permitted persons to relevant indoor premises.
 									</p>
-									<p>Thank you for filling out the contact tracing form for ${formContent.vendor.vendorName}. The following table shows the information that was collected.</p>
+									<p>Following are the details of ${formContent.fullName}.</p>
 									<table>
 										<tr>
 											<td><b>Full Name</b></td>
@@ -427,12 +371,16 @@ exports.indorEmailviaAWS_SES = async (formContent, res) => {
 										</tr>
 										<tr>
 											<td><b>Date Of Visit</b></td>
-											<td>${formContent.dateOfVisit}</td>
+											<td>${moment(formContent.dateOfVisit).format('YYYY-MM-DD')}</td>
 										</tr>
 										<tr>
 											<td><b>Time Of visit</b></td>
 											<td>${formContent.timeOfVisit}</td>
-										</tr>							
+										</tr>
+										<tr>
+											<td><b>Reference Number</b></td>
+											<td>${formContent.refNo}</td>
+										</tr>						
 									</table>
 									<br/>
 									
@@ -445,17 +393,184 @@ exports.indorEmailviaAWS_SES = async (formContent, res) => {
 									</div>
 								</body>
 							</html>`, // html version
-		attachments: [
-			{
-				filename:
-					formContent.fullName.split(' ')[0] +
-					'-' +
-					formContent.certificate.filename,
-				content: fs.createReadStream(tmp_path),
-			},
-		],
+		attachments: [...vendorAttachments],
 	});
 
-	console.log('Message sent: %s', info.messageId);
-	console.log('To vendor', toVendor.messageId);
+	// console.log('Message sent: %s', info.messageId);
+	// console.log('To vendor', toVendor.messageId);
+};
+
+exports.schoolFormEmail_SES = async (savedForm) => {
+	const params = {
+		Destination: {
+			ToAddresses: [savedForm.email], // Email address/addresses that you want to send your email
+		},
+		Message: {
+			Body: {
+				Html: {
+					// HTML Format of the email
+					Charset: 'UTF-8',
+					Data: `<html>
+								<body>
+									<h3>Dear ${savedForm.fullName},</h3>
+									<p>
+									<b>Data Protection Notice:</b> Your personal data is being collected on this form in order to help prevent the spread of COVID-19 in <b><i>"${
+										savedForm.schoolID.schoolName
+									}"</i></b> and to protect our staff and our customers. Your personal data is being processed in accordance with Article 9(2)(i) of the General Data Protection Regulation, and Section 53 of the Data Protection Act 2018. The information you provide on this form will not be used for any other purpose, and will be strictly confidential. The form will be accessible only to administrator of e-society and the vendor for whom you have filled the form. 
+									The Health Act 1947 (Section 31A - Temporary Restrictions) (Covid-19) (No. 2) Regulations 2021 (SI 217 of 2021) provide that a specified person shall retain and make available records made under paragraph (2) for the purposes of inspection by a member of the Garda Síochána acting in the course of his or her duties under these Regulations, or by a person appointed by the Health Service Executive for the purposes of the programme commonly known as the Covid-19 Contact Management Programme, for a period of 28 days after the records have been made. Should a confirmed case arise, the Contact Management Programme will take the necessary action to contact those who need to be contacted.
+									</p>
+									<p>Thank you for filling out the contact tracing form for ${
+										savedForm.schoolID.schoolName
+									}. The following table shows the information that was collected.</p>
+									<table>
+										<tr>
+											<td><b>Full Name</b></td>
+											<td>${savedForm.fullName}</td>
+										</tr>
+										<tr>
+											<td><b>Email</b></td>
+											<td>${savedForm.email}</td>
+										</tr>
+										<tr>
+											<td><b>Student ID</b></td>
+											<td>${savedForm.studentID || ''}</td>
+										</tr>
+										<tr>
+											<td><b>Contact</b></td>
+											<td>${savedForm.phoneNumber}</td>
+										</tr>
+										<tr>
+											<td><b>Date Of Visit</b></td>
+											<td>${moment(savedForm.dateOfVisit).format('YYYY-MM-DD')}</td>
+										</tr>
+										<tr>
+											<td><b>Time Of visit</b></td>
+											<td>${savedForm.timeOfVisit}</td>
+										</tr>
+										<tr>
+											<td><b>Room Number</b></td>
+											<td>${savedForm.roomNumber}</td>
+										</tr>
+
+									</table>
+									<br/>
+									<i>If you have any queries, please feel free to contact the school adminstration.</i>
+									<br/>
+									<p>Thank you.</p>
+									<div style="background:#e7e9eb;">
+										<b>Powered by:</b><br/>
+										<a href="https://e-society.ie"><b>E-Society.ie</b></a>
+									</div>
+								</body>
+							</html>`,
+				},
+				Text: {
+					Charset: 'UTF-8',
+					Data: 'Thanks for reaching out. This is a test mail.',
+				},
+			},
+			Subject: {
+				Charset: 'UTF-8',
+				Data: 'Thanks for filling out the contact form.',
+			},
+		},
+		Source: 'oisin@e-society.ie',
+	};
+
+	const sendEmailReceiver = ses.sendEmail(params).promise();
+
+	sendEmailReceiver
+		.then((data) => {
+			console.log('email submitted to SES', data);
+		})
+		.catch((error) => {
+			console.log(error);
+			res.status(404).send({
+				message: 'Failed to send !',
+			});
+		});
+};
+
+exports.schoolFormsForSchool_SES = async () => {
+	try {
+		let transporter = nodemailer.createTransport({
+			SES: ses,
+		});
+		const schools = await School.find();
+		await schools.forEach(async (school) => {
+			school = school.toJSON();
+
+			const now = new Date();
+			const yesterday = new Date();
+			yesterday.setDate(now.getDate() - 1);
+			// Yesterday to get data from yesterday
+			const today = new Date(
+				yesterday.getFullYear(),
+				yesterday.getMonth(),
+				yesterday.getDate()
+			);
+			const todayString = `${today.getFullYear()}/${
+				today.getMonth() + 1
+			}/${now.getDate()}`;
+
+			const forms = await SchoolForm.find({
+				schoolID: school.id,
+				dateOfVisit: { $gt: today },
+			}).populate('schoolID');
+
+			let bodyTableText = '';
+			forms.forEach((form) => {
+				bodyTableText += `
+					<tr>
+						<td>${form.fullName}</td>
+						<td>${form.email}</td>
+						<td>${form.phoneNumber}</td>
+						<td>${moment(form.dateOfVisit).format('YYYY-MM-DD')}</td>
+						<td>${form.timeOfVisit}</td>
+						<td>${form.studentID}</td>
+						<td>${form.roomNumber}</td>
+					</tr>
+				`;
+			});
+
+			await transporter.sendMail({
+				from: 'oisin@e-society.ie',
+				to: school.schoolEmail,
+				subject: `Forms filled for ${todayString}`,
+				html: `
+					<html>
+						<head>
+							<style>
+								table, th, td {
+									border: 1px solid black;
+								}
+							</style>
+						</head>
+						<body>
+							<h2>Hello ${school.schoolName},</h2>
+							<p>The forms that heve been filled on the date ${todayString} is as follows:</p>
+							<table>
+								<thead>
+									<tr>
+										<th>Full Name</th>
+										<th>Email</th>
+										<th>Contact Number</th>
+										<th>Date Of Visit</th>
+										<th>Time Of Visit</th>
+										<th>Student Number</th>
+										<th>Room Number</th>
+									</tr>
+								</thead>
+								<tbody>
+									${bodyTableText}
+								</tbody>
+							</table>
+						</body>
+					</html>
+				`,
+			});
+		});
+	} catch (error) {
+		console.log(error);
+	}
 };

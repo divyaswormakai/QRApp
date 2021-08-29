@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+// const uniqueValidator = require('mongoose-unique-validator');
 
-const FormSchema = new Schema({
-	vendorID: {
+const SchoolFormSchema = new Schema({
+	schoolID: {
 		type: Schema.Types.ObjectId,
-		ref: 'Vendor',
+		ref: 'School',
 		required: true,
 	},
 	email: {
@@ -28,21 +29,24 @@ const FormSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	noOfPeopleInGroup: {
-		type: Number,
-	},
-
-	comments: {
+	studentID: {
 		type: String,
+		default: '',
+	},
+	roomNumber: {
+		type: String,
+		required: true,
 	},
 });
 
-FormSchema.set('toJSON', {
+SchoolFormSchema.set('toJSON', {
 	transform: (document, returnedObject) => {
 		returnedObject.id = returnedObject._id.toString();
+		// delete returnedObject.active;
 		delete returnedObject._id;
 		delete returnedObject.__v;
 	},
 });
 
-module.exports = mongoose.model('Form', FormSchema);
+// SchoolFormSchema.plugin(uniqueValidator);
+module.exports = mongoose.model('SchoolForm', SchoolFormSchema);

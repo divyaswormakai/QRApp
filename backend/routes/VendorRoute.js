@@ -10,14 +10,14 @@ router.post('/:id', async (req, res) => {
 		const id = req.params.id;
 		const vendor = await Vendor.findById(id);
 		if (!vendor) {
-			res
+			return res
 				.status(400)
 				.json({ error: 'Could not find vendor data for id:' + id });
 		}
 
-		res.status(200).json(vendor.toJSON());
+		return res.status(200).json(vendor.toJSON());
 	} catch (err) {
-		res.status(400).json({ error: 'Could not load the vendor data.' });
+		return res.status(400).json({ error: 'Could not load the vendor data.' });
 	}
 });
 

@@ -19,6 +19,7 @@
     "moment": "^2.29.1",
     "nuxt": "^2.15.3",
     "qrcode.vue": "1.x",
+    "read-excel-file": "^5.2.9",
     "vue-html2canvas": "^0.0.4"
   },
   "devDependencies": {

@@ -2,19 +2,19 @@
   <div class="login-container">
     <h1 class="header">Ireland Contact Tracing</h1>
 
-    <a-switch
-      checked-children="Admin"
-      un-checked-children="Vendor"
-      @change="isAdmin = !isAdmin"
-    />
+    <a-radio-group v-model="selectedOption" button-style="solid">
+      <a-radio-button v-for="option in radioButtonOptions" :key="option" :value="option" >
+        {{ option }}
+      </a-radio-button>
+    </a-radio-group>
 
-    <h2 class="header">{{ getLoginTypeTitle }}</h2>
+    <h2 class="header">{{ selectedOption }} Login</h2>
     <a-form
       id="vendor-login-form"
       :form="vendorLoginForm"
       class="login-form"
       @submit="handleSubmit"
-      v-show="!isAdmin"
+      v-show="selectedOption==='Vendor'"
       :scroll="{ x: 1200 }"
     >
       <a-form-item>
@@ -61,11 +61,11 @@
       </a-form-item>
     </a-form>
     <a-form
-      id="admin-loginform"
+      id="admin-login-form"
       :form="adminLoginForm"
       class="login-form"
       @submit="handleAdminLogin"
-      v-show="isAdmin"
+      v-show="selectedOption==='Admin'"
     >
       <a-form-item>
         <a-input
@@ -80,6 +80,57 @@
           <a-icon
             slot="prefix"
             type="user"
+            style="color: rgba(0, 0, 0, 0.25)"
+          />
+        </a-input>
+      </a-form-item>
+      <a-form-item>
+        <a-input
+          v-decorator="[
+            'password',
+            {
+              rules: [
+                { required: true, message: 'Please input your Password!' },
+              ],
+            },
+          ]"
+          type="password"
+          placeholder="Password"
+        >
+          <a-icon
+            slot="prefix"
+            type="lock"
+            style="color: rgba(0, 0, 0, 0.25)"
+          />
+        </a-input>
+      </a-form-item>
+      <a-form-item>
+        <a-button type="primary" html-type="submit" class="login-form-button">
+          Log in
+        </a-button>
+      </a-form-item>
+    </a-form>
+    <a-form
+      id="school-login-form"
+      :form="schoolLoginForm"
+      class="login-form"
+      @submit="handleSchoolLogin"
+      v-show="selectedOption==='School'"
+      :scroll="{ x: 1200 }"
+    >
+      <a-form-item>
+        <a-input
+          v-decorator="[
+            'schoolEmail',
+            {
+              rules: [{ required: true, message: 'Please input your email!' }],
+            },
+          ]"
+          placeholder="Email"
+        >
+          <a-icon
+            slot="prefix"
+            type="mail"
             style="color: rgba(0, 0, 0, 0.25)"
           />
         </a-input>
@@ -147,15 +198,18 @@ export default {
     this.adminLoginForm = this.$form.createForm(this, {
       name: 'admin_login_form',
     })
+    this.schoolLoginForm = this.$form.createForm(this, {
+      name: 'school_login_form',
+    })
   },
-  computed: {
-    getLoginTypeTitle() {
-      return this.isAdmin ? 'Admin Login' : 'Vendor Login'
-    },
-  },
+
   data() {
     return {
-      isAdmin: false,
+
+      selectedOption: "Vendor",
+      radioButtonOptions: [
+        "Admin" ,"Vendor", "School"
+      ]
     }
   },
   methods: {
@@ -186,6 +240,20 @@ export default {
             this.$cookies.set(LOCAL_STORAGE_ROLE_TYPE, 'admin')
             this.$root.$emit('loginEvent')
             this.$router.push(`vendor`)
+          }
+        }
+      })
+    },
+    async handleSchoolLogin(e) {
+      e.preventDefault()
+      await this.schoolLoginForm.validateFields(async (err, values) => {
+        if (!err) {
+          const result = await this.$axios.post('login/school', values)
+          if (result.data.token) {
+            this.$cookies.set(LOCAL_STORAGE_TOKEN, result.data.token)
+            this.$cookies.set(LOCAL_STORAGE_ROLE_TYPE, 'school')
+            this.$root.$emit('loginEvent')
+            this.$router.push(`school/${result.data.school.id}`)
           }
         }
       })
