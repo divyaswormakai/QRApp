@@ -43,7 +43,7 @@ export default {
 
   //axios
   axios: {
-    baseURL: process.env.BASEURL || "https://localhost:3001/api/" || 'https://form.e-society.ie/api/',
+    baseURL: process.env.BASEURL || "https://localhost/api/" || 'https://form.e-society.ie/api/',
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

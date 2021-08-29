@@ -24,16 +24,8 @@
   <component name="ChangeListManager">
     <list default="true" id="9fa6a4bb-d9f6-47de-b1d3-7be028f1746d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/layouts/default.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/layouts/default.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/nuxt.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/nuxt.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/form/indoor/_id.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/form/indoor/_id.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/form/new/_id.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/form/new/_id.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/form/school/_id.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/form/school/_id.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/vendor/qrcode.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/vendor/qrcode.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/utils/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/utils/constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +95,7 @@
       <workItem from="1630164894740" duration="602000" />
       <workItem from="1630174982801" duration="344000" />
       <workItem from="1630227708390" duration="624000" />
-      <workItem from="1630231999069" duration="17616000" />
+      <workItem from="1630231999069" duration="18631000" />
     </task>
     <servers />
   </component>
