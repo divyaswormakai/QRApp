@@ -188,4 +188,4 @@ export const SCHOOL_FORMS_ADMIN_COLUMNS = [
 export const LOCAL_STORAGE_TOKEN = 'scanMeToken'
 export const LOCAL_STORAGE_ROLE_TYPE = 'scanMeRole'
 export const LOCAL_STORAGE_VENDOR_ID = 'scanMeVendorID'
-export const BASE_URL = 'http://localhost/api/' || 'https://form.e-society.ie/api/'
+export const BASE_URL = "https://testform.e-society.ie/api/"||'http://localhost/api/' || 'https://form.e-society.ie/api/'

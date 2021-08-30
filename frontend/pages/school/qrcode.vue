@@ -45,7 +45,7 @@
          >
            <qrcode-vue
              v-show="schoolFormURL.length > 0"
-             :value="schoolFormURL+'?room='+roomName"
+             :value="schoolFormURL+'?room='+roomName.replaceAll(' ','')"
              size="250"
              class="vendor-qrcode"
              id="vendor-qrcode-contact-poster"
@@ -54,6 +54,7 @@
 
          <p style=" font-size: 1.25rem; color:black">
            Safe. Simple. Speedy.
+
          </p>
 
 
