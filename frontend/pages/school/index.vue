@@ -205,7 +205,15 @@
               },
             ]"
             /></a-form-item>
+
+
 <!--          Room list update here. -->
+          <!--          Add some way to upload a csv file and then read the files to make them into array-->
+          <a-form-item label="File for ClassRoom(Leave empty for unchanged)" >
+            <a-upload :file-list="updateFileList" :remove="handleRemoveUpdate" :before-upload="beforeUploadUpdate" :multiple="false">
+              <a-button> <a-icon type="upload" /> Select Excel File </a-button>
+            </a-upload>
+          </a-form-item>
         </a-form>
       </a-modal>
     </div>
@@ -234,7 +242,8 @@ name: "schoolIndex",
       activeSchoolID: '',
       baseURL: BASE_URL,
       fileList:[],
-      excelFileList:[]
+      excelFileList:[],
+      updateFileList:[],
     }
   },
   methods:{
@@ -294,7 +303,6 @@ name: "schoolIndex",
             //Calculate the roomlist
             let classRoomList ='';
             const sheets = await readXlsxFile(this.excelFileList[0],{getSheets:true})
-            console.log(sheets)
             for(const index in sheets){
               const sheet = sheets[index]
               const data = await readXlsxFile(this.excelFileList[0],{sheet:sheet.name})
@@ -320,6 +328,8 @@ name: "schoolIndex",
             if (result?.status === 200) {
               this.schoolList.push(result?.data)
               this.form.resetFields()
+              this.fileList=[];
+              this.excelFileList=[];
               this.$message.success('Successfully added new school.')
               this.visibleAddForm = false
             } else {
@@ -354,15 +364,35 @@ name: "schoolIndex",
       const updatedSchool = this.editForm.getFieldsValue()
       await this.editForm.validateFields(async (err) => {
         if (!err) {
+          //Calculate the roomlist
+          let classRoomList ='';
+          const sheets = await readXlsxFile(this.updateFileList[0],{getSheets:true})
+
+          for(const index in sheets){
+            const sheet = sheets[index]
+            const data = await readXlsxFile(this.updateFileList[0],{sheet:sheet.name})
+            for(const index2 in data){
+              if(data[index2][0]==='Room'){
+                continue
+              }
+              classRoomList+= `${sheet.name} - ${data[index2][0]},`
+            }
+          }
+          classRoomList = classRoomList.slice(0,classRoomList.length-1)
+
+          const formValues = this.editForm.getFieldsValue();
+          formValues.classRoomList = classRoomList
+
           const result = await this.$axios.put(
             'admin/school/' + this.activeSchoolID,
-            updatedSchool
+            formValues
           )
           if (result?.status === 200) {
             this.schoolList = this.schoolList.map((school) => {
               return school.id === this.activeSchoolID ? result?.data : school
             })
             this.editForm.resetFields()
+            this.updateFileList=[]
             this.activeSchoolID = ''
             this.$message.success(
               'Successfully updated School:' + updatedSchool?.schoolName
@@ -399,6 +429,18 @@ name: "schoolIndex",
 
     beforeUploadExcel(file) {
       this.excelFileList = [ file];
+      return false;
+    },
+
+    handleRemoveUpdate(file) {
+      const index = this.updateFileList.indexOf(file);
+      const newFileList = this.updateFileList.slice();
+      newFileList.splice(index, 1);
+      this.updateFileList = newFileList;
+    },
+
+    beforeUploadUpdate(file) {
+      this.updateFileList = [ file];
       return false;
     },
   }

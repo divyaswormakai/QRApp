@@ -414,10 +414,12 @@ exports.schoolFormEmail_SES = async (savedForm) => {
 								<body>
 									<h3>Dear ${savedForm.fullName},</h3>
 									<p>
-									<b>Data Protection Notice:</b> Your personal data is being collected on this form in order to help prevent the spread of COVID-19 in <b><i>"${
-										savedForm.schoolID.schoolName
-									}"</i></b> and to protect our staff and our customers. Your personal data is being processed in accordance with Article 9(2)(i) of the General Data Protection Regulation, and Section 53 of the Data Protection Act 2018. The information you provide on this form will not be used for any other purpose, and will be strictly confidential. The form will be accessible only to administrator of e-society and the vendor for whom you have filled the form. 
-									The Health Act 1947 (Section 31A - Temporary Restrictions) (Covid-19) (No. 2) Regulations 2021 (SI 217 of 2021) provide that a specified person shall retain and make available records made under paragraph (2) for the purposes of inspection by a member of the Garda Síochána acting in the course of his or her duties under these Regulations, or by a person appointed by the Health Service Executive for the purposes of the programme commonly known as the Covid-19 Contact Management Programme, for a period of 28 days after the records have been made. Should a confirmed case arise, the Contact Management Programme will take the necessary action to contact those who need to be contacted.
+									<b> Data Protection Notice:</b> Your personal data is being collected for Covid - 19
+										contact tracing. The information you provide on this form will not be used for any other
+										purpose, and will be strictly confidential. Your information will be kept for 28 days in
+										accordance with: The Health Act 1947 (Section 31A - Temporary Restrictions) (Covid-19)
+										(No. 2) Regulations 2021 (SI 217 of 2021).  <br/>
+									</p>
 									</p>
 									<p>Thank you for filling out the contact tracing form for ${
 										savedForm.schoolID.schoolName

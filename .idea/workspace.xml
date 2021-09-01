@@ -25,7 +25,8 @@
     <list default="true" id="9fa6a4bb-d9f6-47de-b1d3-7be028f1746d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/nuxt.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/nuxt.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/school/qrcode.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/school/qrcode.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/form/school/_id.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/form/school/_id.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/school/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/school/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/utils/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/utils/constants.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -97,7 +98,9 @@
       <workItem from="1630174982801" duration="344000" />
       <workItem from="1630227708390" duration="624000" />
       <workItem from="1630231999069" duration="19454000" />
-      <workItem from="1630312151731" duration="1294000" />
+      <workItem from="1630312151731" duration="1506000" />
+      <workItem from="1630427593891" duration="2800000" />
+      <workItem from="1630478303147" duration="2345000" />
     </task>
     <servers />
   </component>

@@ -10,6 +10,7 @@ const path = require('path');
 const fs = require('fs');
 
 const { saltRound, adminSaltRound } = require('../config/keys');
+const { findOne } = require('../models/Form');
 
 //set storage engine
 const storage = multer.diskStorage({
@@ -297,7 +298,6 @@ router.post('/school/add', upload.any(), async (req, res) => {
 		}
 		return res.status(200).json(savedSchool.toJSON());
 	} catch (err) {
-		console.log(err);
 		return res
 			.status(400)
 			.json({ error: err.message || 'Could not add new vendor data.' });
@@ -310,8 +310,14 @@ router.post('/school/add', upload.any(), async (req, res) => {
 router.put('/school/:id', async (req, res) => {
 	try {
 		const id = req.params.id;
-		const { schoolName, schoolLocation, schoolContact, schoolEmail, password } =
-			req.body;
+		const {
+			schoolName,
+			schoolLocation,
+			schoolContact,
+			schoolEmail,
+			password,
+			classRoomList,
+		} = req.body;
 
 		if (password.length < 4) {
 			return res
@@ -320,6 +326,14 @@ router.put('/school/:id', async (req, res) => {
 		}
 
 		const passwordHashed = await bcrypt.hash(password, saltRound);
+
+		let updatedClassRoomList = classRoomList;
+		if (!updatedClassRoomList || updatedClassRoomList.length <= 0) {
+			const school = await School.findById(id);
+			updatedClassRoomList = school.classRoomList;
+		} else {
+			updatedClassRoomList = classRoomList?.split(',');
+		}
 
 		const updatedSchool = await School.findOneAndUpdate(
 			{
@@ -330,8 +344,8 @@ router.put('/school/:id', async (req, res) => {
 				schoolLocation,
 				schoolContact,
 				schoolEmail,
-				password,
 				password: passwordHashed,
+				classRoomList: updatedClassRoomList,
 			},
 			{ new: true }
 		);
@@ -342,6 +356,8 @@ router.put('/school/:id', async (req, res) => {
 		}
 		res.status(200).json(updatedSchool.toJSON());
 	} catch (err) {
+		console.log('Error', err.message);
+
 		res.status(400).json({ error: 'Could not update data.' });
 	}
 });
