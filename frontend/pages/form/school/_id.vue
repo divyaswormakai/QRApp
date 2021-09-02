@@ -15,11 +15,10 @@
       v-show="!formSubmitted"
     >
       <p style="background: #9f9f9f">
-        <b> Data Protection Notice:</b> Your personal data is being collected for Covid - 19
-        contact tracing. The information you provide on this form will not be used for any other
-        purpose, and will be strictly confidential. Your information will be kept for 28 days in
-        accordance with: The Health Act 1947 (Section 31A - Temporary Restrictions) (Covid-19)
-        (No. 2) Regulations 2021 (SI 217 of 2021).  <br/>
+        <b> Data Protection Notice:</b> Your personal data is being collected for Covid-19 contact tracing.
+        The information you provide on this form will not be used for any other purpose.
+        Your information will be kept for 28 days in accordance with: The Health Act 1947
+        (Section 31A - Temporary Restrictions) (Covid-19) (No. 2) Regulations 2021 (SI 217 of 2021). <br/>
         <b>Powered by:</b><br />
         <a href="https://e-society.ie"
         ><img
@@ -29,7 +28,7 @@
         /></a>
       </p>
 
-      <a-form-item label="Vendor">
+      <a-form-item label="School Name">
         <a-input v-model="schoolName" disabled />
       </a-form-item>
       <a-form-item label="Room Number">
@@ -64,7 +63,7 @@
           ]"
         />
       </a-form-item>
-      <a-form-item label="Student ID">
+      <a-form-item label="Student/Staff ID">
         <a-input
           v-decorator="[
             'studentID',

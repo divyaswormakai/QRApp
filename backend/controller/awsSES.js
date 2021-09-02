@@ -91,7 +91,7 @@ exports.emailViaAWS_SES = function async(savedForm) {
 				Data: 'Thanks for filling out the contact form',
 			},
 		},
-		Source: 'oisin@e-society.ie',
+		Source: 'info@e-society.ie',
 	};
 
 	const sendEmailReceiver = ses.sendEmail(params).promise();
@@ -234,7 +234,7 @@ exports.vendorEmailAWS_SES = async () => {
 						Data: `List of forms for the day - ${todayString}`,
 					},
 				},
-				Source: 'oisin@e-society.ie',
+				Source: 'info@e-society.ie',
 			};
 
 			const sendEmailReceiver = ses.sendEmail(params).promise();
@@ -293,7 +293,7 @@ exports.indorEmailviaAWS_SES = async (formContent, res) => {
 	}
 	// send mail with defined transport object
 	await transporter.sendMail({
-		from: 'oisin@e-society.ie',
+		from: 'info@e-society.ie',
 		to: formContent.email,
 		subject: `Ref: ${
 			formContent.refNo || ''
@@ -346,7 +346,7 @@ exports.indorEmailviaAWS_SES = async (formContent, res) => {
 		attachments: [...attachments],
 	});
 	await transporter.sendMail({
-		from: 'oisin@e-society.ie',
+		from: 'info@e-society.ie',
 		to: formContent.vendor.vendorEmail,
 		subject: `Ref: ${formContent.refNo || ''}. Details of ${
 			formContent.fullName
@@ -414,11 +414,7 @@ exports.schoolFormEmail_SES = async (savedForm) => {
 								<body>
 									<h3>Dear ${savedForm.fullName},</h3>
 									<p>
-									<b> Data Protection Notice:</b> Your personal data is being collected for Covid - 19
-										contact tracing. The information you provide on this form will not be used for any other
-										purpose, and will be strictly confidential. Your information will be kept for 28 days in
-										accordance with: The Health Act 1947 (Section 31A - Temporary Restrictions) (Covid-19)
-										(No. 2) Regulations 2021 (SI 217 of 2021).  <br/>
+									<b> Data Protection Notice:</b> Your personal data is being collected for Covid-19 contact tracing. The information you provide on this form will not be used for any other purpose. Your information will be kept for 28 days in accordance with: The Health Act 1947 (Section 31A - Temporary Restrictions) (Covid-19) (No. 2) Regulations 2021 (SI 217 of 2021).  <br/>
 									</p>
 									</p>
 									<p>Thank you for filling out the contact tracing form for ${
@@ -476,7 +472,7 @@ exports.schoolFormEmail_SES = async (savedForm) => {
 				Data: 'Thanks for filling out the contact form.',
 			},
 		},
-		Source: 'oisin@e-society.ie',
+		Source: 'info@e-society.ie',
 	};
 
 	const sendEmailReceiver = ses.sendEmail(params).promise();
@@ -517,59 +513,71 @@ exports.schoolFormsForSchool_SES = async () => {
 
 			const forms = await SchoolForm.find({
 				schoolID: school.id,
-				dateOfVisit: { $gt: today },
+				// dateOfVisit: { $gt: today },
 			}).populate('schoolID');
+			// Make groups classified by the room number
+			let groupedForms = {};
+			await forms.forEach((form) => {
+				if (groupedForms[form.roomNumber]) {
+					groupedForms[form.roomNumber].push(form);
+				} else {
+					groupedForms[form.roomNumber] = [form];
+				}
+			});
 
-			let bodyTableText = '';
-			forms.forEach((form) => {
-				bodyTableText += `
+			await Object.keys(groupedForms).forEach(async (group) => {
+				let bodyTableText = '';
+				groupedForms[group].forEach((form) => {
+					bodyTableText += `
 					<tr>
 						<td>${form.fullName}</td>
 						<td>${form.email}</td>
 						<td>${form.phoneNumber}</td>
-						<td>${moment(form.dateOfVisit).format('YYYY-MM-DD')}</td>
+						<td>${moment(form.dateOfVisit).format('DD-MM-YYYY')}</td>
 						<td>${form.timeOfVisit}</td>
 						<td>${form.studentID}</td>
 						<td>${form.roomNumber}</td>
 					</tr>
 				`;
-			});
-
-			await transporter.sendMail({
-				from: 'oisin@e-society.ie',
-				to: school.schoolEmail,
-				subject: `Forms filled for ${todayString}`,
-				html: `
-					<html>
-						<head>
-							<style>
-								table, th, td {
-									border: 1px solid black;
-								}
-							</style>
-						</head>
-						<body>
-							<h2>Hello ${school.schoolName},</h2>
-							<p>The forms that heve been filled on the date ${todayString} is as follows:</p>
-							<table>
-								<thead>
-									<tr>
-										<th>Full Name</th>
-										<th>Email</th>
-										<th>Contact Number</th>
-										<th>Date Of Visit</th>
-										<th>Time Of Visit</th>
-										<th>Student Number</th>
-										<th>Room Number</th>
-									</tr>
-								</thead>
-								<tbody>
-									${bodyTableText}
-								</tbody>
-							</table>
-						</body>
-					</html>
-				`,
+				});
+				await transporter.sendMail({
+					from: 'info@e-society.ie',
+					to: school.schoolEmail,
+					subject: `Room:${group} for ${moment(yesterday).format(
+						'DD-MM-YYYY'
+					)}`,
+					html: `
+						<html>
+							<head>
+								<style>
+									table, th, td {
+										border: 1px solid black;
+									}
+								</style>
+							</head>
+							<body>
+								<h2>Hello ${school.schoolName},</h2>
+								<p>The forms that heve been filled on the date ${todayString} for ${group} is as follows:</p>
+								<table>
+									<thead>
+										<tr>
+											<th>Full Name</th>
+											<th>Email</th>
+											<th>Contact Number</th>
+											<th>Date Of Visit</th>
+											<th>Time Of Visit</th>
+											<th>Student Number</th>
+											<th>Room Number</th>
+										</tr>
+									</thead>
+									<tbody>
+										${bodyTableText}
+									</tbody>
+								</table>
+							</body>
+						</html>
+					`,
+				});
 			});
 		});
 	} catch (error) {

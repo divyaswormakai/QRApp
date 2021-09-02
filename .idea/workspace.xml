@@ -26,7 +26,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/nuxt.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/nuxt.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/form/school/_id.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/form/school/_id.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/school/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/school/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/utils/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/utils/constants.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -100,7 +99,11 @@
       <workItem from="1630231999069" duration="19454000" />
       <workItem from="1630312151731" duration="1506000" />
       <workItem from="1630427593891" duration="2800000" />
-      <workItem from="1630478303147" duration="2345000" />
+      <workItem from="1630478303147" duration="2456000" />
+      <workItem from="1630483583658" duration="149000" />
+      <workItem from="1630564723803" duration="1298000" />
+      <workItem from="1630575691853" duration="1463000" />
+      <workItem from="1630577788272" duration="198000" />
     </task>
     <servers />
   </component>
@@ -133,9 +136,10 @@
     </state>
     <state x="2106" y="275" key="FileChooserDialogImpl/0.0.1366.728/1366.0.1920.1040@1366.0.1920.1040" timestamp="1626163427487" />
     <state x="526" y="195" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1627478948501" />
-    <state x="2033" y="258" width="585" height="534" key="find.popup" timestamp="1630251790787">
-      <screen x="1366" y="0" width="1920" height="1050" />
+    <state x="475" y="181" width="555" height="534" key="find.popup" timestamp="1630483621239">
+      <screen x="0" y="0" width="1366" height="738" />
     </state>
+    <state x="475" y="181" width="555" height="534" key="find.popup/0.0.1366.738/1366.0.1920.1050@0.0.1366.738" timestamp="1630483621239" />
     <state x="2033" y="258" width="585" height="534" key="find.popup/0.0.1366.738/1366.0.1920.1050@1366.0.1920.1050" timestamp="1630251790787" />
     <state x="1989" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1630244260805">
       <screen x="1366" y="0" width="1920" height="1050" />
