@@ -24,9 +24,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9fa6a4bb-d9f6-47de-b1d3-7be028f1746d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/nuxt.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/nuxt.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/form/school/_id.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/form/school/_id.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/utils/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/utils/constants.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,6 +102,8 @@
       <workItem from="1630564723803" duration="1298000" />
       <workItem from="1630575691853" duration="1463000" />
       <workItem from="1630577788272" duration="198000" />
+      <workItem from="1630662995158" duration="1221000" />
+      <workItem from="1630667726473" duration="226000" />
     </task>
     <servers />
   </component>

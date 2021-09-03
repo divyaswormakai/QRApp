@@ -54,7 +54,7 @@ exports.emailViaAWS_SES = function async(savedForm) {
 										</tr>
 										<tr>
 											<td><b>Date Of Visit</b></td>
-											<td>${moment(savedForm.dateOfVisit).format('YYYY-MM-DD')}</td>
+											<td>${moment(savedForm.dateOfVisit).format('DD-MM-YYYY')}</td>
 										</tr>
 										<tr>
 											<td><b>Time Of visit</b></td>
@@ -174,7 +174,7 @@ exports.vendorEmailAWS_SES = async () => {
 							<tr>
 								<td>${form.fullName}</td>
 								<td>${form.email}</td>
-								<td>${moment(form.dateOfVisit).format('YYYY-MM-DD')}</td>
+								<td>${moment(form.dateOfVisit).format('DD-MM-YYYY')}</td>
 								<td>${form.timeOfVisit}</td>
 								<td>${form.phoneNumber || ''}</td>
 								<td>${form.noOfPeopleInGroup}</td>
@@ -186,7 +186,7 @@ exports.vendorEmailAWS_SES = async () => {
 							<tr>
 								<td>${form.fullName}</td>
 								<td>${form.email}</td>
-								<td>${moment(form.dateOfVisit).format('YYYY-MM-DD')}</td>
+								<td>${moment(form.dateOfVisit).format('DD-MM-YYYY')}</td>
 								<td>${form.timeOfVisit}</td>
 								<td>${form.phoneNumber || ''}</td>
 								<td>${form.noOfPeopleInGroup}</td>
@@ -321,7 +321,7 @@ exports.indorEmailviaAWS_SES = async (formContent, res) => {
 										</tr>
 										<tr>
 											<td><b>Date Of Visit</b></td>
-											<td>${moment(formContent.dateOfVisit).format('YYYY-MM-DD')}</td>
+											<td>${moment(formContent.dateOfVisit).format('DD-MM-YYYY')}</td>
 										</tr>
 										<tr>
 											<td><b>Time Of visit</b></td>
@@ -371,7 +371,7 @@ exports.indorEmailviaAWS_SES = async (formContent, res) => {
 										</tr>
 										<tr>
 											<td><b>Date Of Visit</b></td>
-											<td>${moment(formContent.dateOfVisit).format('YYYY-MM-DD')}</td>
+											<td>${moment(formContent.dateOfVisit).format('DD-MM-YYYY')}</td>
 										</tr>
 										<tr>
 											<td><b>Time Of visit</b></td>
@@ -439,7 +439,7 @@ exports.schoolFormEmail_SES = async (savedForm) => {
 										</tr>
 										<tr>
 											<td><b>Date Of Visit</b></td>
-											<td>${moment(savedForm.dateOfVisit).format('YYYY-MM-DD')}</td>
+											<td>${moment(savedForm.dateOfVisit).format('DD-MM-YYYY')}</td>
 										</tr>
 										<tr>
 											<td><b>Time Of visit</b></td>
@@ -452,8 +452,7 @@ exports.schoolFormEmail_SES = async (savedForm) => {
 
 									</table>
 									<br/>
-									<i>If you have any queries, please feel free to contact the school adminstration.</i>
-									<br/>
+								
 									<p>Thank you.</p>
 									<div style="background:#e7e9eb;">
 										<b>Powered by:</b><br/>

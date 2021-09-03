@@ -28,7 +28,7 @@
         /></a>
       </p>
 
-      <a-form-item label="School Name">
+      <a-form-item label="College Name">
         <a-input v-model="schoolName" disabled />
       </a-form-item>
       <a-form-item label="Room Number">
