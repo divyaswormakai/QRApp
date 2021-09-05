@@ -497,22 +497,12 @@ exports.schoolFormsForSchool_SES = async () => {
 		await schools.forEach(async (school) => {
 			school = school.toJSON();
 
-			const now = new Date();
-			const yesterday = new Date();
-			yesterday.setDate(now.getDate() - 1);
 			// Yesterday to get data from yesterday
-			const today = new Date(
-				yesterday.getFullYear(),
-				yesterday.getMonth(),
-				yesterday.getDate()
-			);
-			const todayString = `${today.getFullYear()}/${
-				today.getMonth() + 1
-			}/${now.getDate()}`;
+			const today = moment().subtract(1, 'day').toISOString();
 
 			const forms = await SchoolForm.find({
 				schoolID: school.id,
-				// dateOfVisit: { $gt: today },
+				dateOfVisit: { $gt: today },
 			}).populate('schoolID');
 			// Make groups classified by the room number
 			let groupedForms = {};
@@ -542,9 +532,7 @@ exports.schoolFormsForSchool_SES = async () => {
 				await transporter.sendMail({
 					from: 'info@e-society.ie',
 					to: school.schoolEmail,
-					subject: `Room:${group} for ${moment(yesterday).format(
-						'DD-MM-YYYY'
-					)}`,
+					subject: `Room:${group} for ${moment().format('DD-MM-YYYY')}`,
 					html: `
 						<html>
 							<head>
@@ -556,7 +544,9 @@ exports.schoolFormsForSchool_SES = async () => {
 							</head>
 							<body>
 								<h2>Hello ${school.schoolName},</h2>
-								<p>The forms that heve been filled on the date ${todayString} for ${group} is as follows:</p>
+								<p>The forms that heve been filled on the date ${moment().format(
+									'DD-MM-YYYY'
+								)} for ${group} is as follows:</p>
 								<table>
 									<thead>
 										<tr>
